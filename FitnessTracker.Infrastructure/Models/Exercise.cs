@@ -1,4 +1,4 @@
-﻿namespace FitnessTracker.Infrastructure
+﻿namespace FitnessTracker.Models.Infrastructure
 {
     public class Exercise
     {

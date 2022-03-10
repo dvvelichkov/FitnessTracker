@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitnessTracker.Infrastructure
+namespace FitnessTracker.Models.Infrastructure
 {
     public class FitnessTip
     {
