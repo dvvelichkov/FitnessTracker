@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FitnessTracker.Infrastructure.Models
 {
-    public class Program
+    public class FitnessProgram
     {
         public int Id { get; set; }
         public string Name { get; set; }
