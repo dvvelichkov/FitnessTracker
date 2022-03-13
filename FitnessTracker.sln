@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker", "FitnessTracker\FitnessTracker.csproj", "{9407D591-1574-4FF0-8930-04E6EEC956AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker", "FitnessTracker\FitnessTracker.csproj", "{9407D591-1574-4FF0-8930-04E6EEC956AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.Infrastructure", "FitnessTracker.Infrastructure\FitnessTracker.Infrastructure.csproj", "{801C19A4-E179-48EE-ABBD-88AAD7B7115A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker.Infrastructure", "FitnessTracker.Infrastructure\FitnessTracker.Infrastructure.csproj", "{801C19A4-E179-48EE-ABBD-88AAD7B7115A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.Core", "FitnessTracker.Core\FitnessTracker.Core.csproj", "{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{801C19A4-E179-48EE-ABBD-88AAD7B7115A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801C19A4-E179-48EE-ABBD-88AAD7B7115A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801C19A4-E179-48EE-ABBD-88AAD7B7115A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

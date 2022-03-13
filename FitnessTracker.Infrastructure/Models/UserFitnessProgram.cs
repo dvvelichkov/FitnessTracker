@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace FitnessTracker.Infrastructure.Models
 {
-    public class UserSupplementationPlan
+    public class UserFitnessProgram
     {
         public int UserId { get; set; }
         public User user { get; set; }
-        public int SupplementationPlanId { get; set; }
-        public SupplementationPlan supplementationPlan { get; set; }
+        public int FitnessProgramId { get; set; }
+        public FitnessProgram fitnessProgram { get; set; }
+            
     }
 }
