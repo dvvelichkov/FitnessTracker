@@ -10,9 +10,9 @@ namespace FitnessTracker.Infrastructure.Models
     public class UserPersonalRecord
     {
         public int UserId { get; set; }
-        public User user { get; set; }
+        public User User { get; set; }
         public int PersonalRecordId { get; set; }
-        public PersonalRecord personalRecord { get; set; }
+        public PersonalRecord PersonalRecord { get; set; }
 
         
     }
