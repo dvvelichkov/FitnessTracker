@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTracker.Controllers
 {
-    public class ExerciseController : BaseController
+    public class ExercisesController : BaseController
     {
         public IActionResult Add()
         {

@@ -10,6 +10,10 @@ namespace FitnessTracker.Infrastructure.Models
 {
     public class SupplementationPlan
     {
+        public SupplementationPlan()
+        {
+            this.Supplements = new List<Supplement>();
+        }
         public int Id { get; set; }
         public string Name { get; set; }
 

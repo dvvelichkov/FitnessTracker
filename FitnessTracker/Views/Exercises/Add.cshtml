@@ -1,0 +1,29 @@
+﻿@model AddExerciseViewModel
+
+@{
+    ViewData["Title"] = "Add exercise";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 offset-lg-4 " >
+            <h2 class="text-center">Add Exercise</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="Exercise name">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Exercise description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Image Url</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Image Url">
+                </div>
+                <input class="btn btn-success" type="submit" value="Save"></input>
+            </form>
+        </div>
+    </div>
+
