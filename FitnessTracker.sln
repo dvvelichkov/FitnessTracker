@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker", "FitnessTr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker.Infrastructure", "FitnessTracker.Infrastructure\FitnessTracker.Infrastructure.csproj", "{801C19A4-E179-48EE-ABBD-88AAD7B7115A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker.Core", "FitnessTracker.Core\FitnessTracker.Core.csproj", "{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker.Core", "FitnessTracker.Core\FitnessTracker.Core.csproj", "{B09AE0AA-6D4F-4E11-8739-0DEB998AB249}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

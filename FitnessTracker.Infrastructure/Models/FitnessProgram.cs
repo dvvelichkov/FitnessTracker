@@ -1,10 +1,12 @@
 ﻿using FitnessTracker.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Infrastructure.Models
 {
@@ -14,7 +16,12 @@ namespace FitnessTracker.Infrastructure.Models
         {
             this.Exercises = new List<Exercise>();
         }
+
+        [Key]
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(FitnessProgramNameMaxLength)]
         public string Name { get; set; }
 
         [ForeignKey("Exercise")]

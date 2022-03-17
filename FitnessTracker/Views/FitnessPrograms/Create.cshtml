@@ -19,24 +19,11 @@
                     <textarea asp-for="ProgramDay" rows="4" class="form-control" placeholder="Which day of your schedule is this?"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ExerciseName" class="form-label">Exercise Name</label>
-                    <select asp-for="ExerciseId"class="form-control">
+                    <label asp-for="ExerciseSets" class="form-label">Exercise Name</label>
+                    <select asp-for="ExerciseSets"class="form-control">
                     </select>
                 </div>
                 <input class="btn btn-success" type="submit" value="Save"></input>
             </form>
         </div>
     </div>
-
-
-
-
-
-
-
-            public string Name { get; set; }
-        public string ProgramDay { get; set; }
-        public string ExerciseName { get; set; }
-        public int ExerciseSets { get; set; }
-        public int ExerciseReps { get; set; }
-        public string ExerciseWeight { get; set; }
