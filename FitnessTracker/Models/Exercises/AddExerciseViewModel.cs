@@ -1,4 +1,4 @@
-﻿namespace FitnessTracker.Exercises.Models
+﻿namespace FitnessTracker.Models.Exercises
 {
     public class AddExerciseViewModel
     {

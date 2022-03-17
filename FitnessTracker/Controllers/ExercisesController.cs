@@ -1,10 +1,10 @@
-﻿using FitnessTracker.Exercises.Models;
+﻿using FitnessTracker.Models.Exercises;
 using FitnessTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTracker.Controllers
 {
-    public class ExercisesController : BaseController
+    public class ExercisesController : Controller
     {
         public IActionResult Add()
         {
