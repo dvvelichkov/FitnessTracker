@@ -19,8 +19,12 @@
                     <textarea asp-for="ProgramDay" rows="4" class="form-control" placeholder="Which day of your schedule is this?"></textarea>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ExerciseSets" class="form-label">Exercise Name</label>
-                    <select asp-for="ExerciseSets"class="form-control">
+                    <label asp-for="ExerciseId" class="form-label">Exercise</label>
+                    <select asp-for="ExerciseId" class="form-control">
+@*                        @foreach(var exercise in Model.Exercises)
+                        {
+                            <option value="@exercise.Id">@exercise.ExerciseName</option>
+                        }*@
                     </select>
                 </div>
                 <input class="btn btn-success" type="submit" value="Save"></input>

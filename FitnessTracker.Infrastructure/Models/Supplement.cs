@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FitnessTracker.Infrastructure.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,10 @@ namespace FitnessTracker.Models.Infrastructure
 {
     public class Supplement
     {
+        public Supplement()
+        {
+            this.SupplementsInSupplementationPlans = new HashSet<SupplementInSupplementationPlan>();
+        }
         [Key]
         public int Id { get; set; }
 
@@ -20,5 +25,6 @@ namespace FitnessTracker.Models.Infrastructure
         [MaxLength(SupplementDescriptionMaxLength)]
         public string Description { get; set; }
         public string Quantity { get; set; }
+        public ICollection<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
     }
 }

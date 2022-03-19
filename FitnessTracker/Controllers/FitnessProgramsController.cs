@@ -25,10 +25,10 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
-        //private IEnumerable<AddExerciseViewModel> GetExerciseNames()
+        //private IEnumerable<ExerciseNameViewModel> GetExerciseNames()
         //{
         //    this.data
-        //        .
+                
         //}
     }
 }

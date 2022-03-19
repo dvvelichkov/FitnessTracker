@@ -16,11 +16,23 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label">Description</label>
-                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Exercise description"></textarea>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Write your description here..."></textarea>
                 </div>
                 <div class="mb-3">
                     <label asp-for="ImageUrl" class="form-label">Image Url</label>
                     <input asp-for="ImageUrl" class="form-control" placeholder="Image Url">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ExerciseSets" class="form-label">Exercise sets</label>
+                    <input asp-for="ExerciseSets" class="form-control" placeholder="Specify the number of sets...">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ExerciseReps" class="form-label">Exercise reps</label>
+                    <input asp-for="ExerciseReps" class="form-control" placeholder="Specify the number of reps...">
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ExerciseWeight" class="form-label">Exercise weight</label>
+                    <input asp-for="ExerciseWeight" class="form-control" placeholder="The weight that will be used...">
                 </div>
                 <input class="btn btn-success" type="submit" value="Save"></input>
             </form>

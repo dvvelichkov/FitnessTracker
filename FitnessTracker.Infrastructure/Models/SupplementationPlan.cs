@@ -15,6 +15,7 @@ namespace FitnessTracker.Infrastructure.Models
         public SupplementationPlan()
         {
             this.Supplements = new List<Supplement>();
+            this.SupplementsInSupplementationPlans = new HashSet<SupplementInSupplementationPlan>();
         }
 
         [Key]
@@ -23,9 +24,11 @@ namespace FitnessTracker.Infrastructure.Models
         [Required]
         [MaxLength(SupplementationPlanNameMaxLength)]
         public string Name { get; set; }
-
-        [ForeignKey("Supplement")]
-        public int SupplementId { get; set; }
         public List<Supplement> Supplements { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public User User { get; set; }
+        public ICollection<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
     }
 }
