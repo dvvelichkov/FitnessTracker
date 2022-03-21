@@ -1,3 +1,4 @@
+using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Infrastructure.Data;
 using FitnessTracker.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<FitnessTrackerDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IRepository, Repository>();
 
 var app = builder.Build();
 

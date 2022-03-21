@@ -9,11 +9,13 @@ namespace FitnessTracker.Controllers
 {
     public class ExercisesController : Controller
     {
-        private readonly IRepository repo;
+        //private readonly IRepository repo;
 
-        public ExercisesController(IRepository _repo)
+        private readonly FitnessTrackerDbContext data;
+
+        public ExercisesController(FitnessTrackerDbContext _data)
         {
-            this.repo = _repo; 
+            this.data = _data;
         }
         public IActionResult Add()
         {
@@ -24,12 +26,17 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Add(AddExerciseViewModel exercise)
         {
-            if(this.repo.All<Exercise>().Any(x=> x.Name.ToLower() == exercise.Name.ToLower()))
-            {
-                this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
-            }
+            //var existingExercise = this.data.Exercises.ToList().FirstOrDefault();
 
-            if(!ModelState.IsValid)
+            //if (existingExercise != null)
+            //{
+            //    if (existingExercise.Name.ToLower() == exercise.Name.ToLower())
+            //    {
+            //        this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
+            //    }
+            //}
+
+            if (!ModelState.IsValid)
             {
                 return View(exercise);
             }
@@ -44,11 +51,11 @@ namespace FitnessTracker.Controllers
                 ExerciseWeight = exercise.ExerciseWeight
             };
 
-            repo.Add(exerciseData);
-            repo.SaveChanges();
+            data.Add(exerciseData);
+            data.SaveChanges();
 
-            return RedirectToAction("Home");
-            
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

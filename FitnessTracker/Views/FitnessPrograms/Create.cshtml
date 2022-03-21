@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-4 offset-lg-4 " >
+        <div class="col-sm-12 col-md-4 offset-lg-4 ">
             <h2 class="text-center">Create your fitness program</h2>
             <form method="post">
                 <div class="mb-3">
@@ -18,16 +18,17 @@
                     <label asp-for="ProgramDay" class="form-label">Program Day</label>
                     <textarea asp-for="ProgramDay" rows="4" class="form-control" placeholder="Which day of your schedule is this?"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label asp-for="ExerciseId" class="form-label">Exercise</label>
-                    <select asp-for="ExerciseId" class="form-control">
-  @*                      @foreach(var exercise in Model.Exercises)
-                        {
-                            <option value="@exercise.Id">@exercise.ExerciseName</option>
-                        }*@
-                    </select>
+                <div class="form-check">
+                    @foreach (var exercise in Model.Exercises)
+                    {
+                        <input asp-for="ExerciseId" class="form-check-input" type="checkbox"
+                           value="@exercise.ExerciseName - @exercise.ExerciseSets sets - @exercise.ExerciseReps reps - @exercise.ExerciseWeight">
+                        <label asp-for="ExerciseId" class="form-check-label" for="flexCheckIndeterminate">
+                        </label>
+                    }
                 </div>
                 <input class="btn btn-success" type="submit" value="Save"></input>
             </form>
         </div>
     </div>
+</div>

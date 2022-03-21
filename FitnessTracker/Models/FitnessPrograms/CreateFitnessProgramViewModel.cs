@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Models.Exercises;
+using FitnessTracker.Models.Infrastructure;
 
 namespace FitnessTracker.Models.FitnessPrograms
 {
