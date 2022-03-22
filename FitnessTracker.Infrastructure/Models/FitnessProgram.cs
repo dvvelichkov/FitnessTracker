@@ -14,7 +14,6 @@ namespace FitnessTracker.Infrastructure.Models
     {
         public FitnessProgram()
         {
-            this.Exercises = new List<Exercise>();
             this.ExercisesInFitnessPrograms = new HashSet<ExerciseInFitnessProgram>();
         }
 
@@ -24,8 +23,6 @@ namespace FitnessTracker.Infrastructure.Models
         [Required]
         [MaxLength(FitnessProgramNameMaxLength)]
         public string Name { get; set; }
-        public string ProgramDay { get; set; }
-        public List<Exercise> Exercises { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }

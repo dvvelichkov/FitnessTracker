@@ -26,15 +26,15 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Add(AddExerciseViewModel exercise)
         {
-            //var existingExercise = this.data.Exercises.ToList().FirstOrDefault();
+            var existingExercise = this.data.Exercises.ToList().FirstOrDefault();
 
-            //if (existingExercise != null)
-            //{
-            //    if (existingExercise.Name.ToLower() == exercise.Name.ToLower())
-            //    {
-            //        this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
-            //    }
-            //}
+            if (existingExercise != null)
+            {
+                if (existingExercise.Name.ToLower() == exercise.Name.ToLower())
+                {
+                    this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
+                }
+            }
 
             if (!ModelState.IsValid)
             {
