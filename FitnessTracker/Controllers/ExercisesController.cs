@@ -9,13 +9,13 @@ namespace FitnessTracker.Controllers
 {
     public class ExercisesController : Controller
     {
-        //private readonly IRepository repo;
+        private readonly IRepository repo;
 
-        private readonly FitnessTrackerDbContext data;
+        //private readonly FitnessTrackerDbContext data;
 
-        public ExercisesController(FitnessTrackerDbContext _data)
+        public ExercisesController(IRepository _repo)
         {
-            this.data = _data;
+            this.repo = _repo;
         }
         public IActionResult Add()
         {
@@ -26,7 +26,7 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Add(AddExerciseViewModel exercise)
         {
-            var existingExercise = this.data.Exercises.ToList().FirstOrDefault();
+            var existingExercise = this.repo.All<Exercise>().ToList().FirstOrDefault();
 
             if (existingExercise != null)
             {
@@ -51,8 +51,8 @@ namespace FitnessTracker.Controllers
                 ExerciseWeight = exercise.ExerciseWeight
             };
 
-            data.Add(exerciseData);
-            data.SaveChanges();
+            repo.Add(exerciseData);
+            repo.SaveChanges();
 
             return RedirectToAction("Index", "Home");
 

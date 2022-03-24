@@ -1,0 +1,25 @@
+﻿@model AddPersonalRecordViewModel
+
+@{
+    ViewData["Title"] = "Add personal record";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 offset-lg-4 ">
+            <h2 class="text-center">Add personal record</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="ExerciseName" class="form-label">Exercise name</label>
+                    <input asp-for="ExerciseName" class="form-control" placeholder="Exercise name...">
+                    <span asp-validation-for="ExerciseName" class="small text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Weight" class="form-label">Weight at which you set your record</label>
+                    <textarea asp-for="Weight" rows="4" class="form-control" placeholder="The weight of your best rep..."></textarea>
+                    <span asp-validation-for="Weight" class="small text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

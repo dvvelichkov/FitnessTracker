@@ -1,19 +1,21 @@
 ﻿using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Infrastructure.Data;
+using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Exercises;
 using FitnessTracker.Models.FitnessPrograms;
+using FitnessTracker.Models.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FitnessTracker.Controllers
 {
     public class FitnessProgramsController : Controller
     {
-        //private readonly IRepository repo;
-        private readonly FitnessTrackerDbContext data;
+        private readonly IRepository repo;
+        //private readonly FitnessTrackerDbContext data;
 
-        public FitnessProgramsController(FitnessTrackerDbContext _data)
+        public FitnessProgramsController(IRepository _repo)
         {
-            this.data= _data;
+            this.repo= _repo;
         }
         public IActionResult Create()
         {
@@ -27,12 +29,26 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Create(CreateFitnessProgramViewModel fitnessProgram)
         {
-            return View();
+            if(!ModelState.IsValid)
+            {
+                return View(fitnessProgram);
+            }
+
+            FitnessProgram fitnessProgramData = new FitnessProgram
+            {
+                Name = fitnessProgram.Name,
+                ProgramDay = fitnessProgram.ProgramDay
+            };
+
+            //repo.Add(fitnessProgramData);
+            //repo.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         private IEnumerable<ExerciseNameViewModel> GetExerciseNames()
         {
-            return data.Exercises.Select(x => new ExerciseNameViewModel
+            return repo.All<Exercise>().Select(x => new ExerciseNameViewModel
             {
                 Id = x.Id,
                 ExerciseName = x.Name,
@@ -42,10 +58,6 @@ namespace FitnessTracker.Controllers
             })
             .ToList();
         }
-    }
 
-    //public string ExerciseName { get; set; }
-    //public int ExerciseSets { get; set; }
-    //public int ExerciseReps { get; set; }
-    //public string ExerciseWeight { get; set; }
+    }
 }
