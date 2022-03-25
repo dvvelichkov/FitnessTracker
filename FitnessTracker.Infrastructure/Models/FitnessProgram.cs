@@ -24,6 +24,7 @@ namespace FitnessTracker.Infrastructure.Models
         [MaxLength(FitnessProgramNameMaxLength)]
         public string Name { get; set; }
         public string ProgramDay { get; set; }
+        public List<Exercise> Exercises { get; set; }
 
         [ForeignKey("User")]
         public string UserId { get; set; }

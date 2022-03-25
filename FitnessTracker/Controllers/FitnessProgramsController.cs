@@ -15,49 +15,53 @@ namespace FitnessTracker.Controllers
 
         public FitnessProgramsController(IRepository _repo)
         {
-            this.repo= _repo;
+            this.repo = _repo;
         }
+
+        [HttpGet]
         public IActionResult Create()
         {
-            return View(new CreateFitnessProgramViewModel
+            var item = repo.All<Exercise>().ToList();
+
+            CreateFitnessProgramViewModel fitnessProgram = new CreateFitnessProgramViewModel();
+            fitnessProgram.AvailableExercises = item.Select(x => new CheckBoxItem
             {
-                Exercises = this.GetExerciseNames()
-            });
+                Id = x.Id,
+                Title = x.Name,
+                Sets = x.ExerciseSets.ToString(),
+                Reps = x.ExerciseReps.ToString(),
+                Weight = x.ExerciseWeight,
+
+                IsChecked = false
+            }).ToList();
+
+            return View(fitnessProgram);
         }
 
         [HttpPost]
-
-        public IActionResult Create(CreateFitnessProgramViewModel fitnessProgram)
+        public IActionResult Create(CreateFitnessProgramViewModel fitProgramData, FitnessProgram fitProgram, ExerciseInFitnessProgram exInProgram)
         {
-            if(!ModelState.IsValid)
+            FitnessProgram fitnessProgram = new FitnessProgram();
             {
-                return View(fitnessProgram);
+                fitProgram.Name = fitProgramData.Name;
+                fitProgram.ProgramDay = fitProgramData.ProgramDay;
+                int fitnessProgramId = fitProgram.Id;
+
             }
 
-            FitnessProgram fitnessProgramData = new FitnessProgram
+            foreach (var item in fitProgramData.AvailableExercises)
             {
-                Name = fitnessProgram.Name,
-                ProgramDay = fitnessProgram.ProgramDay
-            };
-
-            //repo.Add(fitnessProgramData);
-            //repo.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
+                if(item.IsChecked == true)
+                {
+                    fitnessProgram.ExercisesInFitnessPrograms.Add(new ExerciseInFitnessProgram
+                    {
+                        FitnessProgramId = fitProgram.Id,
+                        ExerciseId = item.Id,
+                        ProgramDay = fitProgram.ProgramDay
+                    });
+                }
+            }
+            return null;
         }
-
-        private IEnumerable<ExerciseNameViewModel> GetExerciseNames()
-        {
-            return repo.All<Exercise>().Select(x => new ExerciseNameViewModel
-            {
-                Id = x.Id,
-                ExerciseName = x.Name,
-                ExerciseSets = x.ExerciseSets,
-                ExerciseReps = x.ExerciseReps,
-                ExerciseWeight = x.ExerciseWeight
-            })
-            .ToList();
-        }
-
     }
 }

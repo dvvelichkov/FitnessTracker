@@ -1,4 +1,5 @@
-﻿using FitnessTracker.Models.Exercises;
+﻿using FitnessTracker.Infrastructure.Models;
+using FitnessTracker.Models.Exercises;
 using FitnessTracker.Models.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using static FitnessTracker.Infrastructure.Constants.DataConstants;
@@ -15,7 +16,6 @@ namespace FitnessTracker.Models.FitnessPrograms
 
         [Required]
         public string ProgramDay { get; init; }
-        public int ExerciseId { get; set; }
-        public IEnumerable<ExerciseNameViewModel> Exercises { get; set; }
+        public List<CheckBoxItem> AvailableExercises { get; set; }
     }
 }
