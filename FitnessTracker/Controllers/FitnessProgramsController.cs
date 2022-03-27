@@ -11,57 +11,61 @@ namespace FitnessTracker.Controllers
     public class FitnessProgramsController : Controller
     {
         private readonly IRepository repo;
-        //private readonly FitnessTrackerDbContext data;
 
         public FitnessProgramsController(IRepository _repo)
         {
             this.repo = _repo;
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            var item = repo.All<Exercise>().ToList();
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    var item = repo.All<Exercise>().ToList();
 
-            CreateFitnessProgramViewModel fitnessProgram = new CreateFitnessProgramViewModel();
-            fitnessProgram.AvailableExercises = item.Select(x => new CheckBoxItem
-            {
-                Id = x.Id,
-                Title = x.Name,
-                Sets = x.ExerciseSets.ToString(),
-                Reps = x.ExerciseReps.ToString(),
-                Weight = x.ExerciseWeight,
+        //    CreateFitnessProgramViewModel fitnessProgram = new CreateFitnessProgramViewModel();
+        //    fitnessProgram.AvailableExercises = item.Select(x => new CheckBoxItem
+        //    {
+        //        Id = x.Id,
+        //        Title = x.Name,
+        //        IsChecked = false
+        //    }).ToList();
 
-                IsChecked = false
-            }).ToList();
+        //    return View(fitnessProgram);
+        //}
 
-            return View(fitnessProgram);
-        }
+        //[HttpPost]
+        //public IActionResult Create(CreateFitnessProgramViewModel fitProgram)
+        //{
+            //FitnessProgram fitProgramData = new FitnessProgram();
+            //{
+            //    fitProgramData.Name = fitProgram.Name;
+            //    fitProgramData.ProgramDay = fitProgram.ProgramDay;
 
-        [HttpPost]
-        public IActionResult Create(CreateFitnessProgramViewModel fitProgramData, FitnessProgram fitProgram, ExerciseInFitnessProgram exInProgram)
-        {
-            FitnessProgram fitnessProgram = new FitnessProgram();
-            {
-                fitProgram.Name = fitProgramData.Name;
-                fitProgram.ProgramDay = fitProgramData.ProgramDay;
-                int fitnessProgramId = fitProgram.Id;
+            //    foreach (var item in fitProgram.AvailableExercises)
+            //    {
 
-            }
+            //        if (item.IsChecked == true)
+            //        {
+            //            var exercises = repo.All<Exercise>().ToList();
+            //            var exerciseToAdd = exercises.Where(x => x.Id == item.Id).FirstOrDefault();
+            //            if (exerciseToAdd != null)
+            //            {
+            //                fitProgramData.Exercises.Add(exerciseToAdd);
+            //                fitProgramData.ExercisesInFitnessPrograms.Add(new ExerciseInProgramDay
+            //                {
+            //                    ExerciseId = exerciseToAdd.Id,
+            //                    ProgramDay = fitProgramData.ProgramDay,
+            //                    FitnessProgramId = fitProgramData.Id,
+            //                    FitnessProgram = fitProgramData,
+            //                });
+            //            }
+            //        }
+            //    }
+            //}
 
-            foreach (var item in fitProgramData.AvailableExercises)
-            {
-                if(item.IsChecked == true)
-                {
-                    fitnessProgram.ExercisesInFitnessPrograms.Add(new ExerciseInFitnessProgram
-                    {
-                        FitnessProgramId = fitProgram.Id,
-                        ExerciseId = item.Id,
-                        ProgramDay = fitProgram.ProgramDay
-                    });
-                }
-            }
-            return null;
-        }
+            //repo.Add(fitProgramData);
+            //repo.SaveChanges();
+            //return RedirectToAction("Index", "Home");
+        //}
     }
 }

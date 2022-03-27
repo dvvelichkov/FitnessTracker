@@ -1,4 +1,4 @@
-﻿@model CreateFitnessProgramViewModel
+﻿@*@model CreateFitnessProgramViewModel
 
 @{
     ViewData["Title"] = "Create your fitness program";
@@ -19,6 +19,7 @@
                     <label asp-for="ProgramDay" class="form-label">Program Day</label>
                     <textarea asp-for="ProgramDay" rows="4" class="form-control" placeholder="Which day of your schedule is this?"></textarea>
                 </div>
+                <h6>Exercises to add for the day:<h6/>
                 <div class="form-group">
                     <table>
                         @for(int i = 0; i<Model.AvailableExercises.Capacity; i++)
@@ -26,10 +27,7 @@
                             <tr>
                                 <td>
                                     @Html.HiddenFor(x=> Model.AvailableExercises[i].Id)
-                                    @Html.DisplayFor(it=> Model.AvailableExercises[i].Title)
-                                    @Html.DisplayFor(x=> Model.AvailableExercises[i].Sets)
-                                    @Html.DisplayFor(x=> Model.AvailableExercises[i].Reps)
-                                    @Html.DisplayFor(x=> Model.AvailableExercises[i].Weight)
+                                    @Html.DisplayFor(it=> Model.AvailableExercises[i].Title)                         
                                 </td>
                                 <td>
                                     @Html.CheckBoxFor(it=> Model.AvailableExercises[i].IsChecked, new {Style = "vertical"})
@@ -42,4 +40,4 @@
             </form>
         </div>
     </div>
-</div>
+</div>*@

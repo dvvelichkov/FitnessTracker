@@ -17,11 +17,13 @@ namespace FitnessTracker.Models.Infrastructure
 
         [Required]
         [MaxLength(PersonalRecordExerciseNameMaxLength)]
-        public string ExerciseName { get; set; }
+        
+        public int ExerciseId { get; set; }
+        public Exercise Exercise { get; set; }
         public string Weight { get; set; }
 
-        [ForeignKey("User")]
-        public string UserId { get; set; }
-        public User User { get; set; }
+        //[ForeignKey("User")]
+        //public string UserId { get; set; }
+        //public User User { get; set; }
     }
 }

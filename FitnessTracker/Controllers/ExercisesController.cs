@@ -11,8 +11,6 @@ namespace FitnessTracker.Controllers
     {
         private readonly IRepository repo;
 
-        //private readonly FitnessTrackerDbContext data;
-
         public ExercisesController(IRepository _repo)
         {
             this.repo = _repo;
@@ -26,14 +24,11 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Add(AddExerciseViewModel exercise)
         {
-            var existingExercise = this.repo.All<Exercise>().ToList().FirstOrDefault();
+            var existingExercise = this.repo.All<Exercise>().ToList();
 
-            if (existingExercise != null)
+            if (existingExercise.Any(x => x.Name.ToLower() == exercise.Name.ToLower()))
             {
-                if (existingExercise.Name.ToLower() == exercise.Name.ToLower())
-                {
-                    this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
-                }
+                this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
             }
 
             if (!ModelState.IsValid)

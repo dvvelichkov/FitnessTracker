@@ -6,10 +6,12 @@ namespace FitnessTracker.Models.Exercises
     public class AddExerciseViewModel
     {
         [Required]
-        [StringLength(ExerciseNameMaxLength, MinimumLength=ExerciseNameMinLength, ErrorMessage = "The name must be text between {2} and {1} characters long.")]
+        [StringLength(ExerciseNameMaxLength, MinimumLength=ExerciseNameMinLength,
+            ErrorMessage = "The name must be text between {2} and {1} characters long.")]
         public string Name { get; set; }
 
-        [StringLength(ExerciseDescriptionMaxLength, MinimumLength=ExerciseDescriptionMinLength, ErrorMessage = "The description must be text between {2} and {1} characters long.")]
+        [StringLength(ExerciseDescriptionMaxLength, MinimumLength=ExerciseDescriptionMinLength,
+            ErrorMessage = "The description must be text between {2} and {1} characters long.")]
         public string Description { get; set; }
 
         [Url]
@@ -24,7 +26,8 @@ namespace FitnessTracker.Models.Exercises
         public int ExerciseReps { get; set; }
 
         [Required]
-        [StringLength(ExerciseWeightMaxLength, MinimumLength=ExerciseWeightMinLength, ErrorMessage = "Please write between {2} and {1} characters.")]
+        [StringLength(ExerciseWeightMaxLength, MinimumLength=ExerciseWeightMinLength,
+            ErrorMessage = "Please write between {2} and {1} characters.")]
         public string ExerciseWeight { get; set; }
     }
 }

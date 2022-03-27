@@ -17,11 +17,12 @@ namespace FitnessTracker.Infrastructure.Data
 
         }
 
+        public DbSet<CheckBoxItem> CheckBoxItems { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
-        public DbSet<ExerciseInFitnessProgram> ExercisesInFitnessPrograms { get; set; }
         public DbSet<FitnessProgram> FitnessPrograms { get; set; }
         public DbSet<FitnessTip> FitnessTips { get; set; }
         public DbSet<PersonalRecord> PersonalRecords { get; set; }
+        public DbSet<ProgramDay> ProgramDays { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
         public DbSet<SupplementationPlan> SupplementationPlans { get; set; }
         public DbSet<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
@@ -36,8 +37,8 @@ namespace FitnessTracker.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ExerciseInFitnessProgram>()
-                .HasKey(x => new { x.ExerciseId, x.FitnessProgramId });
+            builder.Entity<ExerciseInProgramDay>()
+                .HasKey(x => new { x.ExerciseId, x.ProgramDayId });
 
             builder.Entity<SupplementInSupplementationPlan>()
                 .HasKey(x => new { x.SupplementId, x.SupplementationPlanId });

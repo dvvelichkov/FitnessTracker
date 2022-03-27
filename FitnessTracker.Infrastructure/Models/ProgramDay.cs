@@ -10,24 +10,22 @@ using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Infrastructure.Models
 {
-    public class FitnessProgram
+    public class ProgramDay
     {
-        public FitnessProgram()
+        public ProgramDay()
         {
-            this.ProgramDays = new List<ProgramDay>();
+            this.Exercises = new List<Exercise>();
         }
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(FitnessProgramNameMaxLength)]
+        [MaxLength(ProgramDayNameMaxLength)]
         public string Name { get; set; }
-        public IEnumerable<ProgramDay> ProgramDays { get; set; }
-
-        //[ForeignKey("User")]
-        //public string UserId { get; set; }
-        //public User User { get; set; }
-
+        public int FitnessProgramId { get; set; }
+        public int ExerciseId { get; set; }
+        public FitnessProgram FitnessProgram { get; set; }
+        public List<Exercise> Exercises { get; set; }
     }
 }

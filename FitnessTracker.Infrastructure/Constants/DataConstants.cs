@@ -24,7 +24,10 @@ namespace FitnessTracker.Infrastructure.Constants
         public const int PersonalRecordExerciseNameMaxLength = 60;
         public const int FitnessProgramNameMinLength = 5;
         public const int FitnessProgramNameMaxLength = 50;
+        public const int ProgramDayNameMinLength = 1;
+        public const int ProgramDayNameMaxLength = 20;
         public const int SupplementNameMaxLength = 60;
+        public const int SupplementDescriptionMinLength = 10;
         public const int SupplementDescriptionMaxLength = 500;
         public const int SupplementationPlanNameMaxLength = 50;
 

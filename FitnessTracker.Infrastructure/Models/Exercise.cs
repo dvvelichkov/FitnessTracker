@@ -8,7 +8,7 @@ namespace FitnessTracker.Models.Infrastructure
     {
         public Exercise()
         {
-            this.ExercisesInFitnessPrograms = new HashSet<ExerciseInFitnessProgram>();
+            this.PersonalRecords = new List<PersonalRecord>();
         }
         [Key]
         public int Id { get; set; }
@@ -23,6 +23,7 @@ namespace FitnessTracker.Models.Infrastructure
         public int ExerciseSets { get; set; }
         public int ExerciseReps { get; set; }
         public string ExerciseWeight { get; set; }
-        public ICollection<ExerciseInFitnessProgram> ExercisesInFitnessPrograms { get; set; }
+        public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
+        public IEnumerable<ProgramDay> ProgramDays { get; set; }
     }
 }

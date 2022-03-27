@@ -1,0 +1,37 @@
+﻿@model AddSupplementViewModel
+
+@{
+    ViewData["Title"] = "Add supplement";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 offset-lg-4 " >
+            <h2 class="text-center">Add supplement</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" placeholder="The supplement name...">
+                    <span asp-validation-for="Name" class="small text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Write your description here..."></textarea>
+                    <span asp-validation-for="Description" class="small text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Image Url</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Image Url">
+                    <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Quantity" class="form-label">Quantity</label>
+                    <input asp-for="Quantity" class="form-control" placeholder="How much will you take daily?">
+                    <span asp-validation-for="Quantity" class="small text-danger"></span>
+                </div>
+                <input class="btn btn-success" type="submit" value="Save"></input>
+            </form>
+        </div>
+    </div>
+</div>

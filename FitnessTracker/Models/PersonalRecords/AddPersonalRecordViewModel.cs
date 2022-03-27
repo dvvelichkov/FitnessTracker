@@ -6,11 +6,12 @@ namespace FitnessTracker.Models.PersonalRecords
     public class AddPersonalRecordViewModel
     {
         [Required]
-        [StringLength(PersonalRecordExerciseNameMaxLength, MinimumLength = PersonalRecordExerciseNameMinLength, ErrorMessage = "The name must be text between {2} and {1} characters long.")]
-        public string ExerciseName { get; set; }
+        [StringLength(ExerciseWeightMaxLength, MinimumLength = ExerciseWeightMinLength,
+            ErrorMessage = "Please write between {2} and {1} characters.")]
+        public string Weight { get; init; }
 
-        [Required]
-        [StringLength(ExerciseWeightMaxLength, MinimumLength = ExerciseWeightMinLength, ErrorMessage = "Please write between {2} and {1} characters.")]
-        public string Weight { get; set; }
+        [Display(Name = "Exercise name")]
+        public int ExerciseId { get; init; }
+        public IEnumerable<PersonalRecordExerciseViewModel> Exercises { get; set; }
     }
 }

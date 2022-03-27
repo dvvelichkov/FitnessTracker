@@ -17,8 +17,8 @@ namespace FitnessTracker.Infrastructure.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public ICollection<PersonalRecord> PersonalRecords { get; set; }
-        public ICollection<SupplementationPlan> SupplementationPlans { get; set; }
-        public ICollection<FitnessProgram> FitnessPrograms { get; set; }
+        public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
+        public IEnumerable<SupplementationPlan> SupplementationPlans { get; set; }
+        public IEnumerable<FitnessProgram> FitnessPrograms { get; set; }
     }
 }

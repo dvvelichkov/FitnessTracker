@@ -1,10 +1,9 @@
 ﻿using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 
-namespace FitnessTracker.Models.FitnessPrograms
+namespace FitnessTracker.Models.ProgramDays
 {
-    //This model is not used!
-    public class FitnessProgramExerciseViewModel
+    public class ProgramDayExerciseViewModel
     {
         public int Id { get; set; }
         public string ExerciseName { get; set; }

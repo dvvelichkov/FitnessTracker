@@ -10,9 +10,6 @@ namespace FitnessTracker.Infrastructure.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Sets { get; set; }
-        public string Reps { get; set; }
-        public string Weight { get; set; }
         public bool IsChecked { get; set; }
     }
 }

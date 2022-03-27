@@ -21,10 +21,11 @@ namespace FitnessTracker.Models.Infrastructure
         [Required]
         [MaxLength(SupplementNameMaxLength)]
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
 
         [MaxLength(SupplementDescriptionMaxLength)]
         public string Description { get; set; }
         public string Quantity { get; set; }
-        public ICollection<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
+        public IEnumerable<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
     }
 }
