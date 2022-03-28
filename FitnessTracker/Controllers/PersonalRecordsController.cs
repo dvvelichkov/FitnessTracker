@@ -30,6 +30,7 @@ namespace FitnessTracker.Controllers
             if (!ModelState.IsValid)
             {
                 personalRecord.Exercises = this.GetExerciseNames();
+                return View(personalRecord);
             }
 
             var personalRecordData = new PersonalRecord
@@ -54,4 +55,5 @@ namespace FitnessTracker.Controllers
                 .ToList();
         }
     }
+    #nullable disable
 }

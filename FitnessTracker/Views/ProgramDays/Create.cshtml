@@ -16,14 +16,25 @@
                     <span asp-validation-for="Name" class="small text-danger"></span>
                 </div>
                 <h6>Add exercises to the program day:</h6>
-                @foreach (var exercise in Model.Exercises)
+@*                @foreach (var exercise in Model.Exercises)
                 {
                     <tr>
-                        <td valign=bottom align="center" bgcolor="#DA8191">
+                        <td align=bottom align="center" bgcolor="#DA8191">
                             <input type="checkBox" checkbox value=@exercise.Id>@exercise.ExerciseName>@exercise.ExerciseSets sets>@exercise.ExerciseReps reps>at @exercise.ExerciseWeight<br></br>
                         </td>
                     </tr>
+                }*@
+                <div class="mb-3">
+                <span asp-validation-for="IsChecked" class="small text-danger"></span>
+                                @foreach (var exercise in Model.Exercises)
+                {
+                    <tr>
+                        <td align=bottom align="center" bgcolor="#DA8191">
+                            <input asp-for="IsChecked" checkbox value=@exercise.Id>@exercise.ExerciseName>@exercise.ExerciseSets sets>@exercise.ExerciseReps reps>at @exercise.ExerciseWeight<br>
+                        </td>
+                    </tr>
                 }
+                </div>
                 <input class="btn btn-primary" type="submit" value="Hit the bar!"></input>
             </form>
         </div>

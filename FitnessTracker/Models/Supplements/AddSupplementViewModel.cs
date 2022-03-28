@@ -14,8 +14,10 @@ namespace FitnessTracker.Models.Supplements
         public string ImageUrl { get; set; }
 
         [StringLength(SupplementDescriptionMaxLength, MinimumLength = SupplementDescriptionMinLength,
-            ErrorMessage = "The supplement description must be text between {2}and {1} characters long.")]
+            ErrorMessage = "The supplement description must be text between {2} and {1} characters long.")]
         public string Description { get; set; }
+
+        [Required]
         public string Quantity { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace FitnessTracker.Models.Exercises
             ErrorMessage = "The description must be text between {2} and {1} characters long.")]
         public string Description { get; set; }
 
+        [Required]
         [Url]
         public string ImageUrl { get; set; }
 
