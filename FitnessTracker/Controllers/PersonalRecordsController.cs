@@ -55,5 +55,4 @@ namespace FitnessTracker.Controllers
                 .ToList();
         }
     }
-    #nullable disable
 }

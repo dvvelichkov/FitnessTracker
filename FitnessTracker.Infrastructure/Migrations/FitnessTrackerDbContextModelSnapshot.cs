@@ -103,10 +103,7 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FitnessProgramId")
+                    b.Property<int?>("FitnessProgramId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -542,9 +539,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                 {
                     b.HasOne("FitnessTracker.Infrastructure.Models.FitnessProgram", "FitnessProgram")
                         .WithMany("ProgramDays")
-                        .HasForeignKey("FitnessProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FitnessProgramId");
 
                     b.Navigation("FitnessProgram");
                 });

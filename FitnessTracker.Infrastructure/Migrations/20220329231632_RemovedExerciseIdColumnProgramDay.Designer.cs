@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(FitnessTrackerDbContext))]
-    [Migration("20220327165517_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220329231632_RemovedExerciseIdColumnProgramDay")]
+    partial class RemovedExerciseIdColumnProgramDay
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace FitnessTracker.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ExerciseProgramDay", b =>
+                {
+                    b.Property<int>("ExercisesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgramDaysId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExercisesId", "ProgramDaysId");
+
+                    b.HasIndex("ProgramDaysId");
+
+                    b.ToTable("ExerciseProgramDay");
+                });
 
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.CheckBoxItem", b =>
                 {
@@ -56,7 +71,7 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     b.HasIndex("ProgramDayId");
 
-                    b.ToTable("ExercisesInFitnessPrograms");
+                    b.ToTable("ExerciseInProgramDay");
                 });
 
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.FitnessProgram", b =>
@@ -90,7 +105,7 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("FitnessProgramId")
+                    b.Property<int?>("FitnessProgramId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -252,12 +267,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<int?>("ProgramDayId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProgramDayId");
 
                     b.ToTable("Exercises");
                 });
@@ -325,6 +335,10 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -482,16 +496,31 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ExerciseProgramDay", b =>
+                {
+                    b.HasOne("FitnessTracker.Models.Infrastructure.Exercise", null)
+                        .WithMany()
+                        .HasForeignKey("ExercisesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitnessTracker.Infrastructure.Models.ProgramDay", null)
+                        .WithMany()
+                        .HasForeignKey("ProgramDaysId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ExerciseInProgramDay", b =>
                 {
                     b.HasOne("FitnessTracker.Models.Infrastructure.Exercise", "Exercise")
-                        .WithMany("ExercisesInProgramDays")
+                        .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FitnessTracker.Infrastructure.Models.ProgramDay", "ProgramDay")
-                        .WithMany("ExercisesInProgramDays")
+                        .WithMany()
                         .HasForeignKey("ProgramDayId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -512,9 +541,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                 {
                     b.HasOne("FitnessTracker.Infrastructure.Models.FitnessProgram", "FitnessProgram")
                         .WithMany("ProgramDays")
-                        .HasForeignKey("FitnessProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FitnessProgramId");
 
                     b.Navigation("FitnessProgram");
                 });
@@ -543,13 +570,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.Navigation("Supplement");
 
                     b.Navigation("SupplementationPlan");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Models.Infrastructure.Exercise", b =>
-                {
-                    b.HasOne("FitnessTracker.Infrastructure.Models.ProgramDay", null)
-                        .WithMany("Exercises")
-                        .HasForeignKey("ProgramDayId");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Infrastructure.PersonalRecord", b =>
@@ -630,13 +650,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.Navigation("ProgramDays");
                 });
 
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ProgramDay", b =>
-                {
-                    b.Navigation("Exercises");
-
-                    b.Navigation("ExercisesInProgramDays");
-                });
-
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.SupplementationPlan", b =>
                 {
                     b.Navigation("Supplements");
@@ -655,8 +668,6 @@ namespace FitnessTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("FitnessTracker.Models.Infrastructure.Exercise", b =>
                 {
-                    b.Navigation("ExercisesInProgramDays");
-
                     b.Navigation("PersonalRecords");
                 });
 

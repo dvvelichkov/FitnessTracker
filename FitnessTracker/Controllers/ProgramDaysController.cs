@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Infrastructure.Common;
+using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.ProgramDays;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,36 @@ namespace FitnessTracker.Controllers
         [HttpPost]
         public IActionResult Create(CreateProgramDayViewModel programDay)
         {
-            return View();
+            if(!ModelState.IsValid)
+            {
+                programDay.Exercises = this.GetExerciseNames();
+                return View(programDay);
+            }
+            var programDayData = new ProgramDay
+            {
+                Name = programDay.Name
+            };
+
+            foreach (var option in repo.All<Exercise>())
+            {
+                if(programDay.IsChecked)
+                {
+                    programDayData.Exercises.Add(new Exercise
+                    {
+                        Name = option.Name,
+                        Description = option.Description,
+                        ImageUrl = option.ImageUrl,
+                        ExerciseSets = option.ExerciseSets,
+                        ExerciseReps = option.ExerciseReps,
+                        ExerciseWeight = option.ExerciseWeight
+                    });
+                }
+            }
+            repo.Add(programDayData);
+            repo.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+
         }
         private IEnumerable<ProgramDayExerciseViewModel> GetExerciseNames()
         {
@@ -41,4 +71,5 @@ namespace FitnessTracker.Controllers
                  .ToList();
         }
     }
+
 }
