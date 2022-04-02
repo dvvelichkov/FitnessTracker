@@ -2,6 +2,7 @@
 {
     public enum ExerciseSorting
     {
-        Name = 0
+        Name = 0,
+        DateCreated = 1
     }
 }

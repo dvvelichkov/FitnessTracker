@@ -20,11 +20,24 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
-        public IActionResult All()
+        public IActionResult All(string searchCriteria, ExerciseSorting sorting)
         {
-            var exercises = this.repo
-                .All<Exercise>()
-                .OrderByDescending(x=> x.Id)
+            var exerciseQuery = this.repo.All<Exercise>().AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(searchCriteria))
+            {
+                exerciseQuery = exerciseQuery
+                    .Where(x=> x.Name.ToLower().Contains(searchCriteria.ToLower()));
+            }
+
+            exerciseQuery = sorting switch
+            {
+                ExerciseSorting.DateCreated => exerciseQuery.OrderByDescending(x => x.Id),
+                ExerciseSorting.Name => exerciseQuery.OrderBy(x=> x.Name),
+                _ => exerciseQuery.OrderByDescending(x => x.Id)
+            };
+
+            var exercises = exerciseQuery               
                 .Select(x => new ExerciseListViewModel
                 {
                     Id = x.Id,
@@ -35,7 +48,9 @@ namespace FitnessTracker.Controllers
 
             return View(new AllExercisesQueryModel
             {
-                Exercises = exercises
+                Exercises = exercises,
+                SearchCriteria = searchCriteria,
+                Sorting = sorting
             });
         }
 

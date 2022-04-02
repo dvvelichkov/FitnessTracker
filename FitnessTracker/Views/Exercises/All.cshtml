@@ -1,19 +1,36 @@
 ﻿@model AllExercisesQueryModel
 
+
 <div class="row">
     <form method="get">
         <div class="mb-2 col-md-2">
             <label asp-for="SearchCriteria" class="form-label"></label>
             <input asp-for="SearchCriteria" class="form-control" placeholder="Deadlift, Squat, etc...">
         </div>
+
         <input class="btn btn-primary mb-3" type="submit" value="Search"></input>
+
+        <div class="form-group mb-2 col-md-2">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0" selected>Name</option>
+                    <option value="1">Date Created</option>
+                </select>
+            </div>
+        </div>
+
+        <input class="btn btn-primary mb-3" type="submit" value="Sort"></input>
     </form>
 </div>
-
-
-@foreach (var exercise in Model.Exercises)
-{
+@*
     <div class="row">
+    </div>*@
+
+
+<div class="row">
+    @foreach (var exercise in Model.Exercises)
+    {
         <div class="col-md-2">
             <div class="card mb-2">
                 <img src="@exercise.ImageUrl" class="card-img-top" alt="@exercise.Name">
@@ -23,5 +40,11 @@
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
+
+
+
+
+
+
