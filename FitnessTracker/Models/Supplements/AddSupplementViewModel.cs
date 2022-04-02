@@ -11,6 +11,7 @@ namespace FitnessTracker.Models.Supplements
         public string Name { get; set; }
 
         [Required]
+        [Url]
         public string ImageUrl { get; set; }
 
         [StringLength(SupplementDescriptionMaxLength, MinimumLength = SupplementDescriptionMinLength,

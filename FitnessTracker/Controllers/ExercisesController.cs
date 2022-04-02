@@ -20,6 +20,25 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
+        public IActionResult All()
+        {
+            var exercises = this.repo
+                .All<Exercise>()
+                .OrderByDescending(x=> x.Id)
+                .Select(x => new ExerciseListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
+                })
+                .ToList();
+
+            return View(new AllExercisesQueryModel
+            {
+                Exercises = exercises
+            });
+        }
+
         [HttpPost]
 
         public IActionResult Add(AddExerciseViewModel exercise)
@@ -49,7 +68,7 @@ namespace FitnessTracker.Controllers
             repo.Add(exerciseData);
             repo.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
 
         }
     }

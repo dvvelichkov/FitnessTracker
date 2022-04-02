@@ -1,0 +1,27 @@
+﻿@model AllExercisesQueryModel
+
+<div class="row">
+    <form method="get">
+        <div class="mb-2 col-md-2">
+            <label asp-for="SearchCriteria" class="form-label"></label>
+            <input asp-for="SearchCriteria" class="form-control" placeholder="Deadlift, Squat, etc...">
+        </div>
+        <input class="btn btn-primary mb-3" type="submit" value="Search"></input>
+    </form>
+</div>
+
+
+@foreach (var exercise in Model.Exercises)
+{
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card mb-2">
+                <img src="@exercise.ImageUrl" class="card-img-top" alt="@exercise.Name">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@exercise.Name</h5>
+                    <a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.Id" class="btn btn-primary">View details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
