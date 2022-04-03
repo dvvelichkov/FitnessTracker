@@ -1,0 +1,10 @@
+﻿@model IEnumerable<PersonalRecordListViewModel>
+
+
+    @foreach (var personalRecord in Model)
+{
+    <ul class="list-group">
+        <li class="list-group-item">@personalRecord.Name - @personalRecord.Weight</li>
+    </ul>
+}
+

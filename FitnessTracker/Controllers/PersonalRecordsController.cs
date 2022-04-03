@@ -20,6 +20,21 @@ namespace FitnessTracker.Controllers
             });
         }
 
+        public IActionResult All()
+        {
+            var personalRecords = this.repo.All<PersonalRecord>()
+                .OrderByDescending(x=> x.Id)
+                .Select(x => new PersonalRecordListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Exercise.Name,
+                    Weight = x.Weight
+                })
+                .ToList();
+
+            return View(personalRecords);
+        }
+
         [HttpPost]
         public IActionResult Add(AddPersonalRecordViewModel personalRecord)
         {

@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label asp-for="ExerciseId"></label>
                     <select asp-for="ExerciseId" class="form-control">
-                        @foreach(var exercise in Model.Exercises)
+                        @foreach (var exercise in Model.Exercises)
                         {
                             <option value="@exercise.Id">@exercise.Name</option>
                         }
@@ -24,7 +24,12 @@
                     <span asp-validation-for="Weight" class="small text-danger"></span>
                 </div>
                 <input class="btn btn-success" type="submit" value="Add record"></input>
+
+                <button class="btn btn-success" role="button" asp-area="" asp-controller="PersonalRecords" asp-action="All">See all personal records</button>             
             </form>
         </div>
     </div>
 </div>
+
+
+
