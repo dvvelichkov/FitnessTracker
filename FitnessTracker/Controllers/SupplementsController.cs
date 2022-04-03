@@ -19,6 +19,41 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
+        public IActionResult All(string searchCriteria, SupplementSorting sorting)
+        {
+            var supplementQuery = this.repo.All<Supplement>().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchCriteria))
+            {
+                supplementQuery = supplementQuery
+                    .Where(x => x.Name.ToLower().Contains(searchCriteria.ToLower()));
+            }
+
+            supplementQuery = sorting switch
+            {
+                SupplementSorting.DateCreated => supplementQuery.OrderByDescending(x => x.Id),
+                SupplementSorting.Name => supplementQuery.OrderBy(x => x.Name),
+                SupplementSorting.NameDescending => supplementQuery.OrderByDescending(x=> x.Name),
+                _ => supplementQuery.OrderByDescending(x => x.Id)
+            };
+
+            var supplements = supplementQuery
+                .Select(x => new SupplementListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ImageUrl = x.ImageUrl,
+                })
+                .ToList();
+
+            return View(new AllSupplementsQueryModel
+            {
+                Supplements = supplements,
+                SearchCriteria = searchCriteria,
+                Sorting = sorting
+            });
+        }
+
         [HttpPost]
 
         public IActionResult Add(AddSupplementViewModel supplement)
@@ -46,7 +81,7 @@ namespace FitnessTracker.Controllers
             repo.Add(supplementData);
             repo.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
     }
 }

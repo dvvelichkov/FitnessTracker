@@ -1,0 +1,40 @@
+﻿@model AllSupplementsQueryModel
+
+<div class="row">
+    <form method="get">
+        <div class="mb-2 col-md-2">
+            <label asp-for="SearchCriteria" class="form-label"></label>
+            <input asp-for="SearchCriteria" class="form-control" placeholder="Creatine, protein, etc...">
+        </div>
+
+        <input class="btn btn-primary mb-3" type="submit" value="Search"></input>
+
+        <div class="form-group mb-2 col-md-2">
+            <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0" selected>Name</option>
+                    <option value="1">Name Descending</option>
+                    <option value="2">Date Created</option>
+                </select>
+            </div>
+        </div>
+
+        <input class="btn btn-primary mb-3" type="submit" value="Sort"></input>
+    </form>
+</div>
+
+<div class="row">
+    @foreach (var supplement in Model.Supplements)
+    {
+        <div class="col-md-2">
+            <div class="card mb-2">
+                <img src="@supplement.ImageUrl" class="card-img-top" alt="@supplement.Name">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@supplement.Name</h5>
+                    <a asp-controller="Supplements" asp-action="Details" asp-route-id="@supplement.Id" class="btn btn-primary">View details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
