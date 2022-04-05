@@ -1,0 +1,15 @@
+﻿@model IEnumerable<ProgramDayListViewModel>
+
+   @foreach (var programDay in Model)
+{
+    <h2>Program day name:</h2>
+    <h4>@programDay.Name</h4>
+    <br>
+    <h4>Exercises:</h4>
+    @foreach (var exercise in programDay.Exercises)
+    {
+        <ul class="list-group">
+            <li class="list-group-item">@exercise.ExerciseName - @exercise.ExerciseSets sets @exercise.ExerciseReps reps at @exercise.ExerciseWeight</li>
+        </ul>
+    }
+}

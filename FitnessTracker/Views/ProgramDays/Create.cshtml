@@ -15,31 +15,30 @@
                     <input asp-for="Name" class="form-control" placeholder="Program day name...">
                     <span asp-validation-for="Name" class="small text-danger"></span>
                 </div>
-                <h6>Add exercises to the program day:</h6>
-                @*                @foreach (var exercise in Model.Exercises)
-                    {
-                    <tr>
-                    <td align=bottom align="center" bgcolor="#DA8191">
-                    <input type="checkBox" checkbox value=@exercise.Id>@exercise.ExerciseName>@exercise.ExerciseSets sets>@exercise.ExerciseReps reps>at @exercise.ExerciseWeight<br></br>
-                    </td>
-                    </tr>
-                    }*@
-                <div class=form-group>
-                    <div class="mb-3">
-                        @foreach (var exercise in Model.Exercises)
+                <h5>Add exercises to the program day:</h5>
+
+                <div class="form-group mb-3">
+                    <table>
+                        @for (int i = 0; i < Model.Exercises.Capacity; i++)
                         {
                             <tr>
                                 <td>
-                                    <input asp-for="IsChecked">
-                                    <label asp-for="IsChecked" value=@exercise.Id>@exercise.ExerciseName>@exercise.ExerciseSets sets>@exercise.ExerciseReps reps>at @exercise.ExerciseWeight</label>
-                                    <span asp-validation-for="IsChecked" class="small text-danger"></span>
-                                    <br>
+                                    @Html.HiddenFor(x=> Model.Exercises[i].Id)
+                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseName):
+                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseSets) sets
+                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseReps) reps
+                                    at @Html.DisplayFor(it=> Model.Exercises[i].ExerciseWeight)
+                                </td>
+                                <td>
+                                    @Html.CheckBoxFor(it=> Model.Exercises[i].IsChecked, new {Style = "vertical"})
                                 </td>
                             </tr>
                         }
-                    </div>
+                    </table>
                 </div>
+
                 <input class="btn btn-primary" type="submit" value="Hit the bar!"></input>
+                <button class="btn btn-primary" role="button" asp-area="" asp-controller="ProgramDays" asp-action="All">See all program days</button>
             </form>
         </div>
     </div>

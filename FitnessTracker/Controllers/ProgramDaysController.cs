@@ -19,16 +19,46 @@ namespace FitnessTracker.Controllers
         {
             return View(new CreateProgramDayViewModel
             {
-                Exercises = this.GetExerciseNames()
+                Exercises = this.GetExerciseNames().ToList()
             });
+        }
+
+        public IActionResult All()
+        {
+
+            var programDays = this.repo.All<ProgramDay>()
+                .OrderByDescending(x => x.Id)
+                .Select(x => new ProgramDayListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Exercises = x.Exercises.Select(x => new ProgramDayExerciseViewModel
+                    {
+                        Id = x.Id,
+                        ExerciseName = x.Name,
+                        ExerciseSets = x.ExerciseSets,
+                        ExerciseReps = x.ExerciseReps,
+                        ExerciseWeight = x.ExerciseWeight
+                    })
+                })
+                .ToList();
+
+            return View(programDays);
         }
 
         [HttpPost]
         public IActionResult Create(CreateProgramDayViewModel programDay)
         {
-            if(!ModelState.IsValid)
+            var existingProgramDay = this.repo.All<ProgramDay>().ToList();
+
+            if (existingProgramDay.Any(x => x.Name.ToLower() == programDay.Name.ToLower()))
             {
-                programDay.Exercises = this.GetExerciseNames();
+                this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists!");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                programDay.Exercises = this.GetExerciseNames().ToList();
                 return View(programDay);
             }
             var programDayData = new ProgramDay
@@ -36,25 +66,20 @@ namespace FitnessTracker.Controllers
                 Name = programDay.Name
             };
 
-            foreach (var option in repo.All<Exercise>())
+            foreach (var option in programDay.Exercises)
             {
-                if(programDay.IsChecked)
+                if (option.IsChecked == true)
                 {
-                    programDayData.Exercises.Add(new Exercise
-                    {
-                        Name = option.Name,
-                        Description = option.Description,
-                        ImageUrl = option.ImageUrl,
-                        ExerciseSets = option.ExerciseSets,
-                        ExerciseReps = option.ExerciseReps,
-                        ExerciseWeight = option.ExerciseWeight
-                    });
+                    var exercises = repo.All<Exercise>().ToList();
+                    var exerciseToAdd = exercises.Where(x => x.Id == option.Id).FirstOrDefault();
+
+                    programDayData.Exercises.Add(exerciseToAdd);
                 }
             }
             repo.Add(programDayData);
             repo.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
 
         }
         private IEnumerable<ProgramDayExerciseViewModel> GetExerciseNames()
@@ -64,6 +89,8 @@ namespace FitnessTracker.Controllers
                  {
                      Id = x.Id,
                      ExerciseName = x.Name,
+                     Description = x.Description,
+                     ImageUrl = x.ImageUrl,
                      ExerciseSets = x.ExerciseSets,
                      ExerciseReps = x.ExerciseReps,
                      ExerciseWeight = x.ExerciseWeight
@@ -71,5 +98,4 @@ namespace FitnessTracker.Controllers
                  .ToList();
         }
     }
-
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FitnessTracker.Infrastructure.Models
 {
+    //This class is not used.
     public class CheckBoxItem
     {
         public int Id { get; set; }
