@@ -29,6 +29,7 @@ namespace FitnessTracker.Infrastructure.Constants
         public const int SupplementNameMaxLength = 60;
         public const int SupplementDescriptionMinLength = 10;
         public const int SupplementDescriptionMaxLength = 500;
+        public const int SupplementationPlanNameMinLength = 1;
         public const int SupplementationPlanNameMaxLength = 50;
 
     }

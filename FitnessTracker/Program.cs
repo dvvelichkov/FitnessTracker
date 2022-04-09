@@ -1,7 +1,9 @@
+using FitnessTracker.Core.Services;
 using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Infrastructure.Data;
 using FitnessTracker.Infrastructure.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +16,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<FitnessTrackerDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options=> options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>());
 
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddTransient<IExerciseService, ExerciseService>();
 
 var app = builder.Build();
 

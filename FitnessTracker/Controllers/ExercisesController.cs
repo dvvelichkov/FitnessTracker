@@ -1,18 +1,21 @@
-﻿using FitnessTracker.Models.Exercises;
-using FitnessTracker.Models;
+﻿using FitnessTracker.Models;
 using Microsoft.AspNetCore.Mvc;
 using FitnessTracker.Infrastructure.Data;
 using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Models.Infrastructure;
+using FitnessTracker.Core.Services;
+using FitnessTracker.Core.ViewModels.Exercises;
 
 namespace FitnessTracker.Controllers
 {
     public class ExercisesController : Controller
     {
-        private readonly IRepository repo;
+        private readonly IExerciseService exercises;
+        private IRepository repo;
 
-        public ExercisesController(IRepository _repo)
+        public ExercisesController(IExerciseService _exercises, IRepository _repo)
         {
+            this.exercises = _exercises;
             this.repo = _repo;
         }
         public IActionResult Add()
@@ -20,38 +23,20 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
-        public IActionResult All(string searchCriteria, ExerciseSorting sorting)
+        public IActionResult All(AllExercisesQueryModel query)
         {
-            var exerciseQuery = this.repo.All<Exercise>().AsQueryable();
+            var queryResult = this.exercises.All
+                (
+                query.SearchCriteria,
+                query.Sorting,
+                query.Exercises
+                );
 
-            if(!string.IsNullOrWhiteSpace(searchCriteria))
-            {
-                exerciseQuery = exerciseQuery
-                    .Where(x=> x.Name.ToLower().Contains(searchCriteria.ToLower()));
-            }
+            query.SearchCriteria = queryResult.SearchCriteria;
+            query.Sorting = queryResult.Sorting;
+            query.Exercises = queryResult.Exercises;
 
-            exerciseQuery = sorting switch
-            {
-                ExerciseSorting.DateCreated => exerciseQuery.OrderByDescending(x => x.Id),
-                ExerciseSorting.Name => exerciseQuery.OrderBy(x=> x.Name),
-                _ => exerciseQuery.OrderByDescending(x => x.Id)
-            };
-
-            var exercises = exerciseQuery               
-                .Select(x => new ExerciseListViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ImageUrl = x.ImageUrl,
-                })
-                .ToList();
-
-            return View(new AllExercisesQueryModel
-            {
-                Exercises = exercises,
-                SearchCriteria = searchCriteria,
-                Sorting = sorting
-            });
+            return View(query);
         }
 
         [HttpPost]
