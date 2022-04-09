@@ -23,15 +23,16 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.HiddenFor(x=> Model.Exercises[i].Id)
-                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseName):
-                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseSets) sets
-                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseReps) reps
-                                    at @Html.DisplayFor(it=> Model.Exercises[i].ExerciseWeight)
+                                    @Html.CheckBoxFor(it => Model.Exercises[i].IsChecked, new { Style = "vertical" })
                                 </td>
                                 <td>
-                                    @Html.CheckBoxFor(it=> Model.Exercises[i].IsChecked, new {Style = "vertical"})
+                                    @Html.HiddenFor(x=> Model.Exercises[i].Id)
+                                    @Html.DisplayFor(it=> Model.Exercises[i].ExerciseName):
+                                    @Html.DisplayFor(it => Model.Exercises[i].ExerciseSets) sets
+                                    @Html.DisplayFor(it => Model.Exercises[i].ExerciseReps) reps
+                                    at @Html.DisplayFor(it => Model.Exercises[i].ExerciseWeight)
                                 </td>
+
                             </tr>
                         }
                     </table>
