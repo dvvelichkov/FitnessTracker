@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.PersonalRecord;
 
 namespace FitnessTracker.Models.Infrastructure
 {
@@ -21,9 +21,6 @@ namespace FitnessTracker.Models.Infrastructure
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
         public string Weight { get; set; }
-
-        //[ForeignKey("User")]
-        //public string UserId { get; set; }
-        //public User User { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.SupplementationPlan;
 
 namespace FitnessTracker.Infrastructure.Models
 {
@@ -15,7 +15,6 @@ namespace FitnessTracker.Infrastructure.Models
         public SupplementationPlan()
         {
             this.Supplements = new List<Supplement>();
-            this.SupplementsInSupplementationPlans = new HashSet<SupplementInSupplementationPlan>();
         }
 
         [Key]
@@ -25,10 +24,6 @@ namespace FitnessTracker.Infrastructure.Models
         [MaxLength(SupplementationPlanNameMaxLength)]
         public string Name { get; set; }
         public List<Supplement> Supplements { get; set; }
-
-        //[ForeignKey("User")]
-        //public string UserId { get; set; }
-        //public User User { get; set; }
-        public IEnumerable<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
+        public string UserId { get; set; }
     }
 }

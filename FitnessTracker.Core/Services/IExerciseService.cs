@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Core.ViewModels.Exercises;
+using System.Collections.Generic;
 
 namespace FitnessTracker.Core.Services
 {

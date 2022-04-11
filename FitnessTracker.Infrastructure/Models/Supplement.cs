@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.Supplement;
 
 namespace FitnessTracker.Models.Infrastructure
 {
@@ -13,7 +13,7 @@ namespace FitnessTracker.Models.Infrastructure
     {
         public Supplement()
         {
-            this.SupplementsInSupplementationPlans = new HashSet<SupplementInSupplementationPlan>();
+          
         }
         [Key]
         public int Id { get; set; }
@@ -26,6 +26,5 @@ namespace FitnessTracker.Models.Infrastructure
         [MaxLength(SupplementDescriptionMaxLength)]
         public string Description { get; set; }
         public string Quantity { get; set; }
-        public IEnumerable<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
     }
 }

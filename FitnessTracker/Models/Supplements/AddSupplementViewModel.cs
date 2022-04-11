@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.Supplement;
 
 namespace FitnessTracker.Models.Supplements
 {
     public class AddSupplementViewModel
     {
         [Required]
-        [StringLength(SupplementNameMaxLength, MinimumLength = ExerciseNameMinLength,
+        [StringLength(SupplementNameMaxLength, MinimumLength = SupplementNameMinLength,
             ErrorMessage = "The supplement name must be text between {2} and {1} characters long.")]
         public string Name { get; set; }
 

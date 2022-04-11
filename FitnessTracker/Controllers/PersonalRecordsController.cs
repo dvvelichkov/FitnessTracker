@@ -2,6 +2,8 @@
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.PersonalRecords;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FitnessTracker.Controllers
 {

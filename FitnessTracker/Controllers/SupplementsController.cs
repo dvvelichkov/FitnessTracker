@@ -2,6 +2,7 @@
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.Supplements;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace FitnessTracker.Controllers
 {

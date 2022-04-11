@@ -17,7 +17,6 @@ namespace FitnessTracker.Infrastructure.Data
 
         }
 
-        public DbSet<CheckBoxItem> CheckBoxItems { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<FitnessProgram> FitnessPrograms { get; set; }
         public DbSet<FitnessTip> FitnessTips { get; set; }
@@ -25,8 +24,6 @@ namespace FitnessTracker.Infrastructure.Data
         public DbSet<ProgramDay> ProgramDays { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
         public DbSet<SupplementationPlan> SupplementationPlans { get; set; }
-        public DbSet<SupplementInSupplementationPlan> SupplementsInSupplementationPlans { get; set; }
-        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,29 +34,23 @@ namespace FitnessTracker.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ExerciseInProgramDay>()
-                .HasKey(x => new { x.ExerciseId, x.ProgramDayId });
+            builder.Entity<User>()
+                .HasMany<ProgramDay>(x => x.ProgramDays)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<SupplementInSupplementationPlan>()
-                .HasKey(x => new { x.SupplementId, x.SupplementationPlanId });
+            builder.Entity<User>()
+                .HasMany<PersonalRecord>(x => x.PersonalRecords)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //builder.Entity<User>()
-            //    .HasMany(x => x.FitnessPrograms)
-            //    .WithOne()
-            //    .HasForeignKey(x => x.UserId)
-            //    .HasPrincipalKey(x => x.Id);
-
-            //builder.Entity<User>()
-            //    .HasMany(x => x.PersonalRecords)
-            //    .WithOne()
-            //    .HasForeignKey(x => x.UserId)
-            //    .HasPrincipalKey(x => x.Id);
-
-            //builder.Entity<User>()
-            //    .HasMany(x => x.SupplementationPlans)
-            //    .WithOne()
-            //    .HasForeignKey(x => x.UserId)
-            //    .HasPrincipalKey(x => x.Id);
+            builder.Entity<User>()
+                .HasOne<SupplementationPlan>()
+                .WithOne()
+                .HasForeignKey<SupplementationPlan>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

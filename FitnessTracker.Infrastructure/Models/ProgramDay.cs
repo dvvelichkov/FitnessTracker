@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.ProgramDay;
 
 namespace FitnessTracker.Infrastructure.Models
 {
@@ -23,8 +23,7 @@ namespace FitnessTracker.Infrastructure.Models
         [Required]
         [MaxLength(ProgramDayNameMaxLength)]
         public string Name { get; set; }
-        public int? FitnessProgramId { get; set; }
-        public FitnessProgram FitnessProgram { get; set; }
+        public string UserId { get; set; }
         public List<Exercise> Exercises { get; set; }
     }
 }

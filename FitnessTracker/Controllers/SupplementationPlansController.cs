@@ -3,6 +3,8 @@ using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.SupplementationPlans;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FitnessTracker.Controllers
 {

@@ -1,6 +1,8 @@
 ﻿using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Core.ViewModels.Exercises;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FitnessTracker.Core.Services
 {

@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static FitnessTracker.Infrastructure.Constants.DataConstants;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using static FitnessTracker.Infrastructure.Constants.DataConstants.Exercise;
 
 namespace FitnessTracker.Models.PersonalRecords
 {

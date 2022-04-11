@@ -5,6 +5,7 @@ using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Core.Services;
 using FitnessTracker.Core.ViewModels.Exercises;
+using System.Linq;
 
 namespace FitnessTracker.Controllers
 {

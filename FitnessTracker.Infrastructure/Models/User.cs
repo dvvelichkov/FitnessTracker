@@ -13,12 +13,8 @@ namespace FitnessTracker.Infrastructure.Models
     public class User : IdentityUser
     {
         [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
         public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
         public IEnumerable<SupplementationPlan> SupplementationPlans { get; set; }
-        public IEnumerable<FitnessProgram> FitnessPrograms { get; set; }
+        public IEnumerable<ProgramDay> ProgramDays { get; set; }
     }
 }

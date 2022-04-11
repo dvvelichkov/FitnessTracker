@@ -1,4 +1,6 @@
-﻿namespace FitnessTracker.Models.ProgramDays
+﻿using System.Collections.Generic;
+
+namespace FitnessTracker.Models.ProgramDays
 {
     public class ProgramDayListViewModel
     {
