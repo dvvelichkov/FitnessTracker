@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Infrastructure.Common;
+using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.SupplementationPlans;
@@ -28,12 +29,12 @@ namespace FitnessTracker.Controllers
 
         public IActionResult Create (CreateSupplementationPlanViewModel supplPlan)
         {
-            var supplPlansCount = this.repo.All<SupplementationPlan>().ToList().Count();
+            //var supplPlansCount = this.repo.All<SupplementationPlan>().ToList().Count();
 
-            if(supplPlansCount >= 1)
-            {
-                this.ModelState.AddModelError(nameof(supplPlan.Name), "There is already an existing supplementation plan. Please edit it instead.");
-            }
+            //if(supplPlansCount >= 1)
+            //{
+            //    this.ModelState.AddModelError(nameof(supplPlan.Name), "There is already an existing supplementation plan. Please edit it instead.");
+            //}
 
             if (!ModelState.IsValid)
             {
@@ -41,23 +42,35 @@ namespace FitnessTracker.Controllers
                 return View(supplPlan);
             }
 
-            var supplPlanData = new SupplementationPlan
-            {
-                Name = supplPlan.Name
-            };
+            var userId = this.User.GetId();
+            var userSupplPlanCount = this.repo.All<SupplementationPlan>().Where(x => x.UserId == userId).ToList();
 
-            foreach (var option in supplPlan.Supplements)
+            if(userSupplPlanCount.Count() > 0)
             {
-                if (option.IsChecked == true)
-                {
-                    var supplements = repo.All<Supplement>().ToList();
-                    var supplementToAdd = supplements.Where(x => x.Id == option.Id).FirstOrDefault();
-
-                    supplPlanData.Supplements.Add(supplementToAdd);
-                }
+                this.ModelState.AddModelError(nameof(supplPlan.Name), "There is already an existing supplementation plan. Please edit it instead.");
             }
-            repo.Add(supplPlanData);
-            repo.SaveChanges();
+
+            if(userSupplPlanCount.Count() == 0)
+            {
+                var supplPlanData = new SupplementationPlan
+                {
+                    Name = supplPlan.Name,
+                    UserId = userId
+                };
+
+                foreach (var option in supplPlan.Supplements)
+                {
+                    if (option.IsChecked == true)
+                    {
+                        var supplements = repo.All<Supplement>().ToList();
+                        var supplementToAdd = supplements.Where(x => x.Id == option.Id).FirstOrDefault();
+
+                        supplPlanData.Supplements.Add(supplementToAdd);
+                    }
+                }
+                repo.Add(supplPlanData);
+                repo.SaveChanges();
+            }
 
             return RedirectToAction("Index, Home");
         }

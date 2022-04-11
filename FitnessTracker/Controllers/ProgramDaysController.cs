@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Infrastructure.Common;
+using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.ProgramDays;
@@ -51,35 +52,49 @@ namespace FitnessTracker.Controllers
         [HttpPost]
         public IActionResult Create(CreateProgramDayViewModel programDay)
         {
-            var existingProgramDay = this.repo.All<ProgramDay>().ToList();
+            //var existingProgramDay = this.repo.All<ProgramDay>().ToList();
 
-            if (existingProgramDay.Any(x => x.Name.ToLower() == programDay.Name.ToLower()))
-            {
-                this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists!");
-            }
+            //if (existingProgramDay.Any(x => x.Name.ToLower() == programDay.Name.ToLower()))
+            //{
+            //    this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists!");
+            //}
 
             if (!ModelState.IsValid)
             {
                 programDay.Exercises = this.GetExerciseNames().ToList();
                 return View(programDay);
             }
-            var programDayData = new ProgramDay
-            {
-                Name = programDay.Name
-            };
 
-            foreach (var option in programDay.Exercises)
-            {
-                if (option.IsChecked == true)
-                {
-                    var exercises = repo.All<Exercise>().ToList();
-                    var exerciseToAdd = exercises.Where(x => x.Id == option.Id).FirstOrDefault();
+            var userId = this.User.GetId();
+            var existingDay = this.repo.All<ProgramDay>().Where(x => x.Name == programDay.Name)
+                .Where(x => x.UserId == userId).ToList();
 
-                    programDayData.Exercises.Add(exerciseToAdd);
-                }
+            if(existingDay.Count > 0)
+            {
+                this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists! Please edit it instead.");
             }
-            repo.Add(programDayData);
-            repo.SaveChanges();
+
+            if (existingDay.Count == 0)
+            {
+                var programDayData = new ProgramDay
+                {
+                    Name = programDay.Name,
+                    UserId = userId
+                };
+
+                foreach (var option in programDay.Exercises)
+                {
+                    if (option.IsChecked == true)
+                    {
+                        var exercises = repo.All<Exercise>().ToList();
+                        var exerciseToAdd = exercises.Where(x => x.Id == option.Id).FirstOrDefault();
+
+                        programDayData.Exercises.Add(exerciseToAdd);
+                    }
+                }
+                repo.Add(programDayData);
+                repo.SaveChanges();
+            }
 
             return RedirectToAction(nameof(All));
 

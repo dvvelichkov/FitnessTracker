@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Infrastructure.Common;
+using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.PersonalRecords;
 using Microsoft.AspNetCore.Mvc;
@@ -50,13 +51,26 @@ namespace FitnessTracker.Controllers
                 return View(personalRecord);
             }
 
-            var personalRecordData = new PersonalRecord
+            var userId = this.User.GetId();
+            var existingRecord = repo.All<PersonalRecord>().Where(x=> x.ExerciseId == personalRecord.ExerciseId)
+                .Where(x=> x.UserId == userId).ToList();
+
+            if (existingRecord.Count > 0)
             {
-                ExerciseId = personalRecord.ExerciseId,
-                Weight = personalRecord.Weight,
-            };
-            repo.Add(personalRecordData);
-            repo.SaveChanges();
+                this.ModelState.AddModelError(nameof(personalRecord.ExerciseId),
+                    "There is a personal record for that exercise already. Please edit it instead.");
+            }
+            if(existingRecord.Count == 0)
+            {
+                var personalRecordData = new PersonalRecord
+                {
+                    ExerciseId = personalRecord.ExerciseId,
+                    Weight = personalRecord.Weight,
+                    UserId = this.User.GetId()
+                };
+                repo.Add(personalRecordData);
+                repo.SaveChanges();
+            }
 
             return RedirectToAction("Index", "Home");
         }
