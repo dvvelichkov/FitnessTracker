@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants.FitnessProgram;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Infrastructure.Models
 {

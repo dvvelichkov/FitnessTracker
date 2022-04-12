@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static FitnessTracker.Infrastructure.Constants.DataConstants.ProgramDay;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Models.ProgramDays
 {

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static FitnessTracker.Infrastructure.Constants.DataConstants.Exercise;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Core.ViewModels.Exercises
 {

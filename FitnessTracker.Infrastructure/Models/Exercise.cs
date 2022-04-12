@@ -1,7 +1,7 @@
 ﻿using FitnessTracker.Infrastructure.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static FitnessTracker.Infrastructure.Constants.DataConstants.Exercise;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Models.Infrastructure
 {

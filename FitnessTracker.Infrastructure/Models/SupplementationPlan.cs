@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FitnessTracker.Infrastructure.Constants.DataConstants.SupplementationPlan;
+using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Infrastructure.Models
 {
@@ -25,6 +25,5 @@ namespace FitnessTracker.Infrastructure.Models
         public string Name { get; set; }
         public List<Supplement> Supplements { get; set; }
         public string UserId { get; set; }
-        public User User { get; set; }
     }
 }

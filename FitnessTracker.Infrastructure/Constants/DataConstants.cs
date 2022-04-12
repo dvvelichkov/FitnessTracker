@@ -8,8 +8,8 @@ namespace FitnessTracker.Infrastructure.Constants
 {
     public class DataConstants
     {
-        public class Exercise
-        {
+            //Exercise
+        
             public const int ExerciseNameMinLength = 5;
             public const int ExerciseNameMaxLength = 60;
             public const int ExerciseSetsMinValue = 1;
@@ -20,44 +20,50 @@ namespace FitnessTracker.Infrastructure.Constants
             public const int ExerciseWeightMaxLength = 15;
             public const int ExerciseDescriptionMinLength = 10;
             public const int ExerciseDescriptionMaxLength = 600;
-        }
+        
 
-        public class PersonalRecord
-        {
+            //PersonalRecord
+        
             public const int PersonalRecordExerciseNameMinLength = 5;
             public const int PersonalRecordExerciseNameMaxLength = 60;
-        }
 
-        public class FitnessTip
-        {
+
+            //FitnessTip
+
             public const int FitnessTipNameMaxLength = 60;
             public const int FitnessTipDescriptionMaxLength = 400;
-        }
 
-        public class FitnessProgram
-        {
+
+            //FitnessProgram
+
             public const int FitnessProgramNameMinLength = 5;
             public const int FitnessProgramNameMaxLength = 50;
-        }
+ 
 
-        public class ProgramDay
-        {
+            //ProgramDay
+        
             public const int ProgramDayNameMinLength = 1;
             public const int ProgramDayNameMaxLength = 20;
-        }
+       
 
-        public class Supplement
-        {
+            //Supplement
+        
             public const int SupplementNameMinLength = 4;
             public const int SupplementNameMaxLength = 60;
             public const int SupplementDescriptionMinLength = 10;
             public const int SupplementDescriptionMaxLength = 500;
-        }
+        
 
-        public class SupplementationPlan
-        {
+            //SupplementationPlan
+        
             public const int SupplementationPlanNameMinLength = 1;
             public const int SupplementationPlanNameMaxLength = 50;
-        }
+        
+
+            public const int UserFullNameMinLength = 4;
+            public const int UserFullNameMaxLength = 30;
+            public const int UserPasswordMinLength = 4;
+            public const int UserPasswordMaxLength = 20;
+
     }
 }
