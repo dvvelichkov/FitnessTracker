@@ -22,5 +22,6 @@ namespace FitnessTracker.Models.Infrastructure
         public Exercise Exercise { get; set; }
         public string Weight { get; set; }
         public string UserId { get; set; }
+        public User User { get; set; }
     }
 }
