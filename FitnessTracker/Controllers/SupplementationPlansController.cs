@@ -3,12 +3,14 @@ using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.SupplementationPlans;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class SupplementationPlansController : Controller
     {
         private readonly IRepository repo;
@@ -26,7 +28,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-
+        [Authorize]
         public IActionResult Create (CreateSupplementationPlanViewModel supplPlan)
         {
             //var supplPlansCount = this.repo.All<SupplementationPlan>().ToList().Count();
@@ -72,7 +74,28 @@ namespace FitnessTracker.Controllers
                 repo.SaveChanges();
             }
 
-            return RedirectToAction("Index, Home");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult All()
+        {
+
+            var supplementationPlans = this.repo.All<SupplementationPlan>()
+                .OrderByDescending(x => x.Id)
+                .Select(x => new SupplPlanListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Supplements = x.Supplements.Select(x => new SupplPlanSupplementViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Quantity = x.Quantity
+                    })
+                })
+                .ToList();
+
+            return View(supplementationPlans);
         }
 
         private IEnumerable<SupplPlanSupplementViewModel> GetSupplementNames()

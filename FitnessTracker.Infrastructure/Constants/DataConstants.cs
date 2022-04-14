@@ -17,7 +17,7 @@ namespace FitnessTracker.Infrastructure.Constants
             public const int ExerciseRepsMinValue = 1;
             public const int ExerciseRepsMaxValue = 200;
             public const int ExerciseWeightMinLength = 1;
-            public const int ExerciseWeightMaxLength = 15;
+            public const int ExerciseWeightMaxLength = 25;
             public const int ExerciseDescriptionMinLength = 10;
             public const int ExerciseDescriptionMaxLength = 600;
         

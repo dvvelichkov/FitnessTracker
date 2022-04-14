@@ -3,12 +3,14 @@ using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Infrastructure.Models;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.ProgramDays;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class ProgramDaysController : Controller
     {
         private readonly IRepository repo;
@@ -26,6 +28,7 @@ namespace FitnessTracker.Controllers
             });
         }
 
+        [Authorize]
         public IActionResult All()
         {
 
@@ -50,6 +53,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(CreateProgramDayViewModel programDay)
         {
             //var existingProgramDay = this.repo.All<ProgramDay>().ToList();
@@ -66,7 +70,7 @@ namespace FitnessTracker.Controllers
             }
 
             var userId = this.User.GetId();
-            var existingDay = this.repo.All<ProgramDay>().Where(x => x.Name == programDay.Name)
+            var existingDay = this.repo.All<ProgramDay>().Where(x => x.Name.ToLower() == programDay.Name.ToLower())
                 .Where(x => x.UserId == userId).ToList();
 
             if(existingDay.Count > 0)

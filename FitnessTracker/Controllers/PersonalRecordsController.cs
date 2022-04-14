@@ -2,12 +2,14 @@
 using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.PersonalRecords;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class PersonalRecordsController : Controller
     {
         private readonly IRepository repo;
@@ -23,6 +25,7 @@ namespace FitnessTracker.Controllers
             });
         }
 
+        [Authorize]
         public IActionResult All()
         {
             var personalRecords = this.repo.All<PersonalRecord>()
@@ -39,6 +42,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddPersonalRecordViewModel personalRecord)
         {
             if(!this.repo.All<Exercise>().Any(x=> x.Id == personalRecord.ExerciseId))

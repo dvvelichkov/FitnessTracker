@@ -24,6 +24,9 @@ namespace FitnessTracker.Infrastructure.Models
         [MaxLength(SupplementationPlanNameMaxLength)]
         public string Name { get; set; }
         public List<Supplement> Supplements { get; set; }
+
+        [ForeignKey("User")]
         public string UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

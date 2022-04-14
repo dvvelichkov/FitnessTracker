@@ -18,8 +18,6 @@ namespace FitnessTracker.Infrastructure.Data
         }
 
         public DbSet<Exercise> Exercises { get; set; }
-        public DbSet<FitnessProgram> FitnessPrograms { get; set; }
-        public DbSet<FitnessTip> FitnessTips { get; set; }
         public DbSet<PersonalRecord> PersonalRecords { get; set; }
         public DbSet<ProgramDay> ProgramDays { get; set; }
         public DbSet<Supplement> Supplements { get; set; }
@@ -46,9 +44,9 @@ namespace FitnessTracker.Infrastructure.Data
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<User>()
-                .HasOne<SupplementationPlan>()
-                .WithOne()
+            builder.Entity<SupplementationPlan>()
+                .HasOne<User>(x=> x.User)
+                .WithOne(x=> x.SupplementationPlan)
                 .HasForeignKey<SupplementationPlan>(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

@@ -21,6 +21,8 @@ namespace FitnessTracker.Models.Infrastructure
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
         public string Weight { get; set; }
+
+        [ForeignKey("User")]
         public string UserId { get; set; }
     }
 }

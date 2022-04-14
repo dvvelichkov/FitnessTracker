@@ -6,9 +6,11 @@ using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Core.Services;
 using FitnessTracker.Core.ViewModels.Exercises;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class ExercisesController : Controller
     {
         private readonly IExerciseService exercises;
@@ -24,6 +26,7 @@ namespace FitnessTracker.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult All(AllExercisesQueryModel query)
         {
             var queryResult = this.exercises.All
@@ -41,7 +44,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-
+        [Authorize]
         public IActionResult Add(AddExerciseViewModel exercise)
         {
             var existingExercise = this.repo.All<Exercise>().ToList();

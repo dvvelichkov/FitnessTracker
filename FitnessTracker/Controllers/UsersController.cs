@@ -7,9 +7,13 @@ using FitnessTracker.Infrastructure.Models;
 using System.Linq;
 using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -17,32 +21,34 @@ namespace FitnessTracker.Controllers
         private readonly IRepository repo;
         public UsersController(UserManager<User> _userManager, SignInManager<User> _signInManager, IRepository _repo)
         {
-                this.userManager = _userManager;
-                this.signInManager = _signInManager;
-                this.repo = _repo;
+            this.userManager = _userManager;
+            this.signInManager = _signInManager;
+            this.repo = _repo;
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult>Register(RegisterViewModel user)
+        public async Task<IActionResult> Register(RegisterViewModel user)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(user);
             }
 
-            var userMailExists = this.repo.All<User>().Any(x=> x.Email == user.Email);
+            var userMailExists = this.repo.All<User>().Any(x => x.Email == user.Email);
 
-            if(userMailExists)
+            if (userMailExists)
             {
                 this.ModelState.AddModelError(nameof(user.Password),
                     "This e-mail is already used. Please enter another e-mail address.");
             }
-            if(!userMailExists)
+            if (!userMailExists)
             {
                 var registeredUser = new User
                 {
@@ -65,19 +71,58 @@ namespace FitnessTracker.Controllers
                 }
             }
 
-            return RedirectToAction("Index, Home");
+            return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel user)
+        {
+            var userToBeLoggedIn = await this.userManager.FindByEmailAsync(user.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid credentials!");
+                return View(user);
+            }
+            var passwordIsValid = await this.userManager.CheckPasswordAsync(userToBeLoggedIn, user.Password);
+
+            if (!passwordIsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid credentials!");
+                return View(user);
+            }
+
+            await this.signInManager.SignInAsync(userToBeLoggedIn, true);
+
+            return RedirectToAction("Index", "Home");
+        }
 
         [HttpPost]
-        public IActionResult Login()
+        public async Task<IActionResult> Logout()
         {
+            await signInManager.SignOutAsync();
 
+            if (HttpContext.Request.Cookies.Count > 0)
+            {
+                var siteCookies = HttpContext.Request.Cookies.Where(c => c.Key.Contains(".AspNetCore.")
+                || c.Key.Contains("Microsoft.Authentication"));
+                foreach (var cookie in siteCookies)
+                {
+                    Response.Cookies.Delete(cookie.Key);
+                }
+            }
+
+            await HttpContext.SignOutAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
+            return RedirectToPage("Index");
         }
     }
 }

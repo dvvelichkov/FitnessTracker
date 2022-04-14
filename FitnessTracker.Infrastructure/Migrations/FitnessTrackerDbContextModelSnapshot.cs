@@ -17,7 +17,7 @@ namespace FitnessTracker.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -37,64 +37,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.ToTable("ExerciseProgramDay");
                 });
 
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.CheckBoxItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CheckBoxItems");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ExerciseInProgramDay", b =>
-                {
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProgramDayId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ExerciseId", "ProgramDayId");
-
-                    b.HasIndex("ProgramDayId");
-
-                    b.ToTable("ExerciseInProgramDay");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.FitnessProgram", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FitnessPrograms");
-                });
-
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ProgramDay", b =>
                 {
                     b.Property<int>("Id")
@@ -103,17 +45,18 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("FitnessProgramId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FitnessProgramId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ProgramDays");
                 });
@@ -132,28 +75,15 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("SupplementationPlans");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.SupplementInSupplementationPlan", b =>
-                {
-                    b.Property<int>("SupplementId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplementationPlanId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SupplementId", "SupplementationPlanId");
-
-                    b.HasIndex("SupplementationPlanId");
-
-                    b.ToTable("SupplementsInSupplementationPlans");
                 });
 
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.User", b =>
@@ -175,13 +105,10 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -196,10 +123,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -270,29 +193,6 @@ namespace FitnessTracker.Infrastructure.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("FitnessTracker.Models.Infrastructure.FitnessTip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FitnessTips");
-                });
-
             modelBuilder.Entity("FitnessTracker.Models.Infrastructure.PersonalRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -306,6 +206,7 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Weight")
@@ -509,65 +410,24 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ExerciseInProgramDay", b =>
-                {
-                    b.HasOne("FitnessTracker.Models.Infrastructure.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FitnessTracker.Infrastructure.Models.ProgramDay", "ProgramDay")
-                        .WithMany()
-                        .HasForeignKey("ProgramDayId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exercise");
-
-                    b.Navigation("ProgramDay");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.FitnessProgram", b =>
-                {
-                    b.HasOne("FitnessTracker.Infrastructure.Models.User", null)
-                        .WithMany("FitnessPrograms")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.ProgramDay", b =>
                 {
-                    b.HasOne("FitnessTracker.Infrastructure.Models.FitnessProgram", "FitnessProgram")
+                    b.HasOne("FitnessTracker.Infrastructure.Models.User", null)
                         .WithMany("ProgramDays")
-                        .HasForeignKey("FitnessProgramId");
-
-                    b.Navigation("FitnessProgram");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.SupplementationPlan", b =>
                 {
-                    b.HasOne("FitnessTracker.Infrastructure.Models.User", null)
-                        .WithMany("SupplementationPlans")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.SupplementInSupplementationPlan", b =>
-                {
-                    b.HasOne("FitnessTracker.Models.Infrastructure.Supplement", "Supplement")
-                        .WithMany("SupplementsInSupplementationPlans")
-                        .HasForeignKey("SupplementId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("FitnessTracker.Infrastructure.Models.User", "User")
+                        .WithOne("SupplementationPlan")
+                        .HasForeignKey("FitnessTracker.Infrastructure.Models.SupplementationPlan", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FitnessTracker.Infrastructure.Models.SupplementationPlan", "SupplementationPlan")
-                        .WithMany("SupplementsInSupplementationPlans")
-                        .HasForeignKey("SupplementationPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplement");
-
-                    b.Navigation("SupplementationPlan");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Infrastructure.PersonalRecord", b =>
@@ -580,7 +440,9 @@ namespace FitnessTracker.Infrastructure.Migrations
 
                     b.HasOne("FitnessTracker.Infrastructure.Models.User", null)
                         .WithMany("PersonalRecords")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Exercise");
                 });
@@ -643,35 +505,24 @@ namespace FitnessTracker.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitnessTracker.Infrastructure.Models.FitnessProgram", b =>
-                {
-                    b.Navigation("ProgramDays");
-                });
-
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.SupplementationPlan", b =>
                 {
                     b.Navigation("Supplements");
-
-                    b.Navigation("SupplementsInSupplementationPlans");
                 });
 
             modelBuilder.Entity("FitnessTracker.Infrastructure.Models.User", b =>
                 {
-                    b.Navigation("FitnessPrograms");
-
                     b.Navigation("PersonalRecords");
 
-                    b.Navigation("SupplementationPlans");
+                    b.Navigation("ProgramDays");
+
+                    b.Navigation("SupplementationPlan")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Infrastructure.Exercise", b =>
                 {
                     b.Navigation("PersonalRecords");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Models.Infrastructure.Supplement", b =>
-                {
-                    b.Navigation("SupplementsInSupplementationPlans");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,14 +17,13 @@ namespace FitnessTracker.Infrastructure.Models
         public User()
         {
             this.PersonalRecords = new List<PersonalRecord>();
-            this.SupplementationPlans = new List<SupplementationPlan>();
             this.ProgramDays = new List<ProgramDay>();
         }
 
         [MaxLength(UserFullNameMaxLength)]
         public string FullName { get; set; }
         public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
-        public IEnumerable<SupplementationPlan> SupplementationPlans { get; set; }
+        public SupplementationPlan SupplementationPlan { get; set; }
         public IEnumerable<ProgramDay> ProgramDays { get; set; }
     }
 }

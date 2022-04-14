@@ -22,9 +22,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+@*                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
+
+                        @if(User.Identity.IsAuthenticated)
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Exercises" asp-action="Add">Add Exercise</a>
                         </li>
@@ -46,6 +49,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Supplements" asp-action="All">All Supplements</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SupplementationPlans" asp-action="All">All Suppl Plans</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                        </li>
+                        }
 
                         @if(!User.Identity.IsAuthenticated)
                         {
@@ -58,7 +68,7 @@
                         }
 
                     </ul>
-                    <partial name="_LoginPartial" />
+                   @* <partial name="_LoginPartial" />*@
                 </div>
             </div>
         </nav>

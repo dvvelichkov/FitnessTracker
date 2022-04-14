@@ -1,11 +1,13 @@
 ﻿using FitnessTracker.Infrastructure.Common;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.Supplements;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
+    [Authorize]
     public class SupplementsController : Controller
     {
 
@@ -15,11 +17,13 @@ namespace FitnessTracker.Controllers
         {
             this.repo = _repo;
         }
+
         public IActionResult Add()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult All(string searchCriteria, SupplementSorting sorting)
         {
             var supplementQuery = this.repo.All<Supplement>().AsQueryable();
@@ -56,7 +60,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-
+        [Authorize]
         public IActionResult Add(AddSupplementViewModel supplement)
         {
             var existingSupplement = this.repo.All<Supplement>().ToList();
