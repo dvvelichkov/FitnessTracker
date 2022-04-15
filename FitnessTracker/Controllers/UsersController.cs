@@ -45,31 +45,31 @@ namespace FitnessTracker.Controllers
 
             if (userMailExists)
             {
-                this.ModelState.AddModelError(nameof(user.Password),
-                    "This e-mail is already used. Please enter another e-mail address.");
+                this.ModelState.AddModelError(nameof(user.Email),
+                    "This e-mail is already used! Please enter another e-mail address.");
+                return View(user);
             }
-            if (!userMailExists)
+
+            var registeredUser = new User
             {
-                var registeredUser = new User
+                Email = user.Email,
+                FullName = user.FullName,
+                UserName = user.Email
+            };
+
+            var result = await this.userManager.CreateAsync(registeredUser, user.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(x => x.Description);
+
+                foreach (var error in errors)
                 {
-                    Email = user.Email,
-                    FullName = user.FullName,
-                    UserName = user.Email
-                };
-
-                var result = await this.userManager.CreateAsync(registeredUser, user.Password);
-
-                if (!result.Succeeded)
-                {
-                    var errors = result.Errors.Select(x => x.Description);
-
-                    foreach (var error in errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error);
-                    }
-                    return View(user);
+                    ModelState.AddModelError(string.Empty, error);
                 }
+                return View(user);
             }
+
 
             return RedirectToAction("Index", "Home");
         }
@@ -99,7 +99,7 @@ namespace FitnessTracker.Controllers
                 return View(user);
             }
 
-            await this.signInManager.SignInAsync(userToBeLoggedIn, true);
+            await this.signInManager.SignInAsync(userToBeLoggedIn, false);
 
             return RedirectToAction("Index", "Home");
         }

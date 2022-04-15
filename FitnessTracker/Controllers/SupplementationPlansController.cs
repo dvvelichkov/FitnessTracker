@@ -49,7 +49,10 @@ namespace FitnessTracker.Controllers
 
             if(userSupplPlanCount.Count() > 0)
             {
-                this.ModelState.AddModelError(nameof(supplPlan.Name), "There is already an existing supplementation plan. Please edit it instead.");
+                this.ModelState.AddModelError(nameof(supplPlan.Name),
+                    "You already have an existing supplementation plan. Please edit it instead.");
+                supplPlan.Supplements = this.GetSupplementNames().ToList();
+                return View(supplPlan);
             }
 
             if(userSupplPlanCount.Count() == 0)

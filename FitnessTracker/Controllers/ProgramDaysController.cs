@@ -69,36 +69,38 @@ namespace FitnessTracker.Controllers
                 return View(programDay);
             }
 
-            var userId = this.User.GetId();
-            var existingDay = this.repo.All<ProgramDay>().Where(x => x.Name.ToLower() == programDay.Name.ToLower())
-                .Where(x => x.UserId == userId).ToList();
+            var existingProgramDay = this.repo.All<ProgramDay>().Where(x => x.UserId == this.User.GetId())
+                    .Select(x => x.Name).First();
 
-            if(existingDay.Count > 0)
+            if (existingProgramDay.ToLower() == programDay.Name.ToLower())
             {
-                this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists! Please edit it instead.");
+                this.ModelState.AddModelError(nameof(programDay.Name),
+                    "You already have such program day! Please edit it instead.");
+
+                programDay.Exercises = this.GetExerciseNames().ToList();
+                return View(programDay);
             }
 
-            if (existingDay.Count == 0)
+
+            var programDayData = new ProgramDay
             {
-                var programDayData = new ProgramDay
-                {
-                    Name = programDay.Name,
-                    UserId = userId
-                };
+                Name = programDay.Name,
+                UserId = this.User.GetId()
+            };
 
-                foreach (var option in programDay.Exercises)
+            foreach (var option in programDay.Exercises)
+            {
+                if (option.IsChecked == true)
                 {
-                    if (option.IsChecked == true)
-                    {
-                        var exercises = repo.All<Exercise>().ToList();
-                        var exerciseToAdd = exercises.Where(x => x.Id == option.Id).FirstOrDefault();
+                    var exercises = repo.All<Exercise>().ToList();
+                    var exerciseToAdd = exercises.Where(x => x.Id == option.Id).FirstOrDefault();
 
-                        programDayData.Exercises.Add(exerciseToAdd);
-                    }
+                    programDayData.Exercises.Add(exerciseToAdd);
                 }
-                repo.Add(programDayData);
-                repo.SaveChanges();
             }
+            repo.Add(programDayData);
+            repo.SaveChanges();
+
 
             return RedirectToAction(nameof(All));
 
