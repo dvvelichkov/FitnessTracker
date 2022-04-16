@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FitnessTracker.Controllers
 {
-    [Authorize]
+
     public class ExercisesController : Controller
     {
         private readonly IExerciseService exercises;

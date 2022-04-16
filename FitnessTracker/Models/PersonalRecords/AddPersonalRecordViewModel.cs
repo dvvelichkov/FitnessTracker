@@ -14,5 +14,6 @@ namespace FitnessTracker.Models.PersonalRecords
         [Display(Name = "Exercise name")]
         public int ExerciseId { get; init; }
         public IEnumerable<PersonalRecordExerciseViewModel> Exercises { get; set; }
+        public string UserId { get; set; }
     }
 }

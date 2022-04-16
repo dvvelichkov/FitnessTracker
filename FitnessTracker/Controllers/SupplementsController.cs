@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
-    [Authorize]
+
     public class SupplementsController : Controller
     {
 

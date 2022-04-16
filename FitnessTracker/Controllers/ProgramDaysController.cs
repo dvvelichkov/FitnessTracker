@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace FitnessTracker.Controllers
 {
-    [Authorize]
+
     public class ProgramDaysController : Controller
     {
         private readonly IRepository repo;
