@@ -1,0 +1,19 @@
+﻿@model IEnumerable<PersonalRecordListViewModel>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            @foreach (var personalRecord in Model)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item">@personalRecord.Name - @personalRecord.Weight</li>
+                </ul>
+            }
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-danger" role="button" asp-area="" asp-controller="PersonalRecords" asp-action="Edit">Edit</button>
+            <button class="btn btn-danger" role="button" asp-area="" asp-controller="PersonalRecords" asp-action="Delete">Delete</button>
+        </div>
+    </div>
+</div>
+

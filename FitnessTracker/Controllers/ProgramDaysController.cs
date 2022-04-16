@@ -52,17 +52,35 @@ namespace FitnessTracker.Controllers
             return View(programDays);
         }
 
+        [Authorize]
+        public IActionResult Mine()
+        {
+
+            var programDays = this.repo.All<ProgramDay>()
+                .Where(x => x.UserId == this.User.GetId())
+                .OrderByDescending(x => x.Id)
+                .Select(x => new ProgramDayListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Exercises = x.Exercises.Select(x => new ProgramDayExerciseViewModel
+                    {
+                        Id = x.Id,
+                        ExerciseName = x.Name,
+                        ExerciseSets = x.ExerciseSets,
+                        ExerciseReps = x.ExerciseReps,
+                        ExerciseWeight = x.ExerciseWeight
+                    })
+                })
+                .ToList();
+
+            return View(programDays);
+        }
+
         [HttpPost]
         [Authorize]
         public IActionResult Create(CreateProgramDayViewModel programDay)
         {
-            //var existingProgramDay = this.repo.All<ProgramDay>().ToList();
-
-            //if (existingProgramDay.Any(x => x.Name.ToLower() == programDay.Name.ToLower()))
-            //{
-            //    this.ModelState.AddModelError(nameof(programDay.Name), "Such program day already exists!");
-            //}
-
             if (!ModelState.IsValid)
             {
                 programDay.Exercises = this.GetExerciseNames().ToList();

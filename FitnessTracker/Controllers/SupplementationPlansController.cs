@@ -28,16 +28,8 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Create (CreateSupplementationPlanViewModel supplPlan)
         {
-            //var supplPlansCount = this.repo.All<SupplementationPlan>().ToList().Count();
-
-            //if(supplPlansCount >= 1)
-            //{
-            //    this.ModelState.AddModelError(nameof(supplPlan.Name), "There is already an existing supplementation plan. Please edit it instead.");
-            //}
-
             if (!ModelState.IsValid)
             {
                 supplPlan.Supplements = this.GetSupplementNames().ToList();
@@ -84,6 +76,27 @@ namespace FitnessTracker.Controllers
         {
 
             var supplementationPlans = this.repo.All<SupplementationPlan>()
+                .OrderByDescending(x => x.Id)
+                .Select(x => new SupplPlanListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Supplements = x.Supplements.Select(x => new SupplPlanSupplementViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Quantity = x.Quantity
+                    })
+                })
+                .ToList();
+
+            return View(supplementationPlans);
+        }
+
+        public IActionResult Mine()
+        {
+            var supplementationPlans = this.repo.All<SupplementationPlan>()
+                .Where(x=> x.UserId == this.User.GetId())
                 .OrderByDescending(x => x.Id)
                 .Select(x => new SupplPlanListViewModel
                 {

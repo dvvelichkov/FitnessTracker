@@ -7,7 +7,7 @@
             <input asp-for="SearchCriteria" class="form-control" placeholder="Creatine, protein, etc...">
         </div>
 
-        <input class="btn btn-primary mb-3" type="submit" value="Search"></input>
+        <input class="btn btn-success mb-3" type="submit" value="Search"></input>
 
         <div class="form-group mb-2 col-md-2">
             <div class="form-group">
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <input class="btn btn-primary mb-3" type="submit" value="Sort"></input>
+        <input class="btn btn-success mb-3" type="submit" value="Sort"></input>
     </form>
 </div>
 
@@ -32,7 +32,7 @@
                 <img src="@supplement.ImageUrl" class="card-img-top" alt="@supplement.Name">
                 <div class="card-body text-center">
                     <h5 class="card-title">@supplement.Name</h5>
-                    <a asp-controller="Supplements" asp-action="Details" asp-route-id="@supplement.Id" class="btn btn-primary">View details</a>
+                    <a asp-controller="Supplements" asp-action="Details" asp-route-id="@supplement.Id" class="btn btn-success">View details</a>
                 </div>
             </div>
         </div>

@@ -41,6 +41,23 @@ namespace FitnessTracker.Controllers
             return View(personalRecords);
         }
 
+        [Authorize]
+        public IActionResult Mine()
+        {
+            var personalRecords = this.repo.All<PersonalRecord>()
+                .Where(x=> x.UserId == this.User.GetId())
+                .OrderByDescending(x => x.Id)
+                .Select(x => new PersonalRecordListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Exercise.Name,
+                    Weight = x.Weight
+                })
+                .ToList();
+
+            return View(personalRecords);
+        }
+
         [HttpPost]
         [Authorize]
         public IActionResult Add(AddPersonalRecordViewModel personalRecord)
@@ -78,6 +95,11 @@ namespace FitnessTracker.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
+        public IActionResult Edit(int Id)
+        {
+
+        }
         private IEnumerable<PersonalRecordExerciseViewModel> GetExerciseNames()
         {
            return this.repo.All<Exercise>()

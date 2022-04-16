@@ -1,0 +1,18 @@
+﻿@model IEnumerable<SupplPlanListViewModel>
+
+       @foreach (var supplPlan in Model)
+{
+    <h2>Supplementation plan name:</h2>
+    <h4>@supplPlan.Name</h4>
+    <br>
+    <h4>Supplements in plan:</h4>
+    @foreach (var supplement in supplPlan.Supplements)
+    {
+        <ul class="list-group">
+            <li class="list-group-item">@supplement.Name - @supplement.Quantity</li>
+        </ul>
+    }
+    <div class="mb-3"></div>
+    <button class="btn btn-danger" role="button" asp-area="" asp-controller="SupplementationPlans" asp-action="Edit">Edit</button>
+    <button class="btn btn-danger" role="button" asp-area="" asp-controller="SupplementationPlans" asp-action="Delete">Delete</button>
+}
