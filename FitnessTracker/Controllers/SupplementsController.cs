@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Infrastructure.Common;
+using FitnessTracker.Infrastructure.Extensions;
 using FitnessTracker.Models.Infrastructure;
 using FitnessTracker.Models.Supplements;
 using Microsoft.AspNetCore.Authorization;
@@ -63,9 +64,11 @@ namespace FitnessTracker.Controllers
         [Authorize]
         public IActionResult Add(AddSupplementViewModel supplement)
         {
-            var existingSupplement = this.repo.All<Supplement>().ToList();
+            var existingSupplement = this.repo.All<Supplement>()
+                .Where(x => x.UserId == this.User.GetId())
+                .ToList();
 
-            if (existingSupplement.Any(x => x.Name.ToLower() == supplement.Name.ToLower()))
+            if (existingSupplement.Any(x=> x.Name.ToLower() == supplement.Name.ToLower()))
             {
                 this.ModelState.AddModelError(nameof(supplement.Name), "This supplement already exists!");
             }
@@ -80,7 +83,8 @@ namespace FitnessTracker.Controllers
                 Name = supplement.Name,
                 Description = supplement.Description,
                 ImageUrl = supplement.ImageUrl,
-                Quantity = supplement.Quantity
+                Quantity = supplement.Quantity,
+                UserId = this.User.GetId()
             };
 
             repo.Add(supplementData);

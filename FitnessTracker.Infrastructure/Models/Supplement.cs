@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,5 +27,8 @@ namespace FitnessTracker.Models.Infrastructure
         [MaxLength(SupplementDescriptionMaxLength)]
         public string Description { get; set; }
         public string Quantity { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
     }
 }

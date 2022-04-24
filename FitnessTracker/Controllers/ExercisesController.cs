@@ -7,6 +7,7 @@ using FitnessTracker.Core.Services;
 using FitnessTracker.Core.ViewModels.Exercises;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using FitnessTracker.Infrastructure.Extensions;
 
 namespace FitnessTracker.Controllers
 {
@@ -47,9 +48,11 @@ namespace FitnessTracker.Controllers
         [Authorize]
         public IActionResult Add(AddExerciseViewModel exercise)
         {
-            var existingExercise = this.repo.All<Exercise>().ToList();
+            var existingExercise = this.repo.All<Exercise>()
+                .Where(x => x.UserId == this.User.GetId())
+                .ToList();
 
-            if (existingExercise.Any(x => x.Name.ToLower() == exercise.Name.ToLower()))
+            if (existingExercise.Any(x=> x.Name.ToLower() == exercise.Name.ToLower()))
             {
                 this.ModelState.AddModelError(nameof(exercise.Name), "This exercise already exists!");
             }
@@ -66,7 +69,8 @@ namespace FitnessTracker.Controllers
                 ImageUrl = exercise.ImageUrl,
                 ExerciseSets = exercise.ExerciseSets,
                 ExerciseReps = exercise.ExerciseReps,
-                ExerciseWeight = exercise.ExerciseWeight
+                ExerciseWeight = exercise.ExerciseWeight,
+                UserId = this.User.GetId()
             };
 
             repo.Add(exerciseData);

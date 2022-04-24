@@ -30,5 +30,6 @@ namespace FitnessTracker.Models.Exercises
         [StringLength(ExerciseWeightMaxLength, MinimumLength=ExerciseWeightMinLength,
             ErrorMessage = "Please write between {2} and {1} characters.")]
         public string ExerciseWeight { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FitnessTracker.Infrastructure.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static FitnessTracker.Infrastructure.Constants.DataConstants;
 
 namespace FitnessTracker.Models.Infrastructure
@@ -24,6 +25,9 @@ namespace FitnessTracker.Models.Infrastructure
         public int ExerciseSets { get; set; }
         public int ExerciseReps { get; set; }
         public string ExerciseWeight { get; set; }
+
+        [ForeignKey("User")]
+        public string UserId { get; set; }
         public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
         public IEnumerable<ProgramDay> ProgramDays { get; set; }
     }

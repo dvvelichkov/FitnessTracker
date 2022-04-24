@@ -25,5 +25,7 @@ namespace FitnessTracker.Infrastructure.Models
         public IEnumerable<PersonalRecord> PersonalRecords { get; set; }
         public SupplementationPlan SupplementationPlan { get; set; }
         public IEnumerable<ProgramDay> ProgramDays { get; set; }
+        public IEnumerable<Exercise> Exercises { get; set; }
+        public IEnumerable<Supplement> Supplements { get; set; }
     }
 }

@@ -44,9 +44,21 @@ namespace FitnessTracker.Infrastructure.Data
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<User>()
+                .HasMany<Exercise>(x => x.Exercises)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<User>()
+                .HasMany<Supplement>(x => x.Supplements)
+                .WithOne()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<SupplementationPlan>()
-                .HasOne<User>(x=> x.User)
-                .WithOne(x=> x.SupplementationPlan)
+                .HasOne<User>(x => x.User)
+                .WithOne(x => x.SupplementationPlan)
                 .HasForeignKey<SupplementationPlan>(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

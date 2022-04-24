@@ -20,5 +20,6 @@ namespace FitnessTracker.Models.Supplements
 
         [Required]
         public string Quantity { get; set; }
+        public string UserId { get; set; }
     }
 }

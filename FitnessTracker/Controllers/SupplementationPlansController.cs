@@ -93,6 +93,61 @@ namespace FitnessTracker.Controllers
             return View(supplementationPlans);
         }
 
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var supplPlan = this.Details(id);
+
+            return View(new CreateSupplementationPlanViewModel
+            {
+                Name = supplPlan.Name,
+                UserId = supplPlan.UserId,
+                Supplements = this.GetSupplementNames().ToList()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+
+        public IActionResult Edit(EditSupplPlanViewModel supplPlan)
+        {
+            if (!ModelState.IsValid)
+            {
+                supplPlan.Supplements = this.GetSupplementNames().ToList();
+                return View(supplPlan);
+            }
+
+            var supplPlanData = this.repo.All<SupplementationPlan>()
+                .Where(x => x.UserId == this.User.GetId())
+                .First();
+
+            if (supplPlanData.UserId != this.User.GetId())
+            {
+                return BadRequest();
+            }
+
+            foreach (var supplement in supplPlan.Supplements)
+            {
+                if(supplement.IsChecked == true)
+                {
+                    var supplements = repo.All<Supplement>().ToList();
+                    var supplementToAdd = supplements.Where(x => x.Id == supplement.Id).FirstOrDefault();
+
+                    if(supplPlanData.Supplements.Contains(supplementToAdd))
+                    {
+                        this.ModelState.AddModelError(nameof(supplementToAdd),
+                    "You already have such existing supplementation in your plan.");
+                        return View(supplPlan);
+                    }
+
+                    supplPlanData.Supplements.Add(supplementToAdd);
+                }
+            }
+            supplPlanData.Name = supplPlan.Name;
+            repo.SaveChanges();
+
+            return RedirectToAction("Mine", "SupplementationPlans");
+        }
         public IActionResult Mine()
         {
             var supplementationPlans = this.repo.All<SupplementationPlan>()
@@ -126,6 +181,19 @@ namespace FitnessTracker.Controllers
                      Quantity = x.Quantity
                  })
                  .ToList();
+        }
+
+        public EditSupplPlanViewModel Details(int id)
+        {
+            return this.repo.All<SupplementationPlan>()
+                .Where(x => x.Id == id)
+                .Select(x => new EditSupplPlanViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UserId = x.UserId
+                })
+                .FirstOrDefault();
         }
     }
 }

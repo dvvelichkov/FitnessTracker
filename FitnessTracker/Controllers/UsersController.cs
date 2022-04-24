@@ -119,10 +119,11 @@ namespace FitnessTracker.Controllers
                 }
             }
 
-            await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Clear();
-            return RedirectToPage("Index");
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            return RedirectToAction("Index", "Home");
         }
     }
 }
