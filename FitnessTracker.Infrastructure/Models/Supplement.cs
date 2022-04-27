@@ -30,5 +30,8 @@ namespace FitnessTracker.Models.Infrastructure
 
         [ForeignKey("User")]
         public string UserId { get; set; }
+
+        [ForeignKey("SupplementationPlan")]
+        public string? SupplementationPlanId { get; set; }
     }
 }

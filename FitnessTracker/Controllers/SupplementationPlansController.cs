@@ -28,7 +28,7 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create (CreateSupplementationPlanViewModel supplPlan)
+        public IActionResult Create(CreateSupplementationPlanViewModel supplPlan)
         {
             if (!ModelState.IsValid)
             {
@@ -39,7 +39,7 @@ namespace FitnessTracker.Controllers
             var userId = this.User.GetId();
             var userSupplPlanCount = this.repo.All<SupplementationPlan>().Where(x => x.UserId == userId).ToList();
 
-            if(userSupplPlanCount.Count() > 0)
+            if (userSupplPlanCount.Count() > 0)
             {
                 this.ModelState.AddModelError(nameof(supplPlan.Name),
                     "You already have an existing supplementation plan. Please edit it instead.");
@@ -47,7 +47,7 @@ namespace FitnessTracker.Controllers
                 return View(supplPlan);
             }
 
-            if(userSupplPlanCount.Count() == 0)
+            if (userSupplPlanCount.Count() == 0)
             {
                 var supplPlanData = new SupplementationPlan
                 {
@@ -94,9 +94,14 @@ namespace FitnessTracker.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(string name)
         {
-            var supplPlan = this.Details(id);
+            var supplPlan = this.Details(name);
+
+            if (supplPlan.UserId != this.User.GetId())
+            {
+                return BadRequest();
+            }
 
             return View(new CreateSupplementationPlanViewModel
             {
@@ -109,7 +114,7 @@ namespace FitnessTracker.Controllers
         [HttpPost]
         [Authorize]
 
-        public IActionResult Edit(EditSupplPlanViewModel supplPlan)
+        public IActionResult Edit(CreateSupplementationPlanViewModel supplPlan)
         {
             if (!ModelState.IsValid)
             {
@@ -125,15 +130,18 @@ namespace FitnessTracker.Controllers
             {
                 return BadRequest();
             }
+            supplPlanData.Name = supplPlan.Name;
+            supplPlan.Supplements = this.GetSupplementNames().ToList();
+            supplPlanData.Supplements.Clear();
 
             foreach (var supplement in supplPlan.Supplements)
             {
-                if(supplement.IsChecked == true)
+                if (supplement.IsChecked == true)
                 {
                     var supplements = repo.All<Supplement>().ToList();
                     var supplementToAdd = supplements.Where(x => x.Id == supplement.Id).FirstOrDefault();
 
-                    if(supplPlanData.Supplements.Contains(supplementToAdd))
+                    if (supplPlanData.Supplements.Contains(supplementToAdd))
                     {
                         this.ModelState.AddModelError(nameof(supplementToAdd),
                     "You already have such existing supplementation in your plan.");
@@ -143,7 +151,7 @@ namespace FitnessTracker.Controllers
                     supplPlanData.Supplements.Add(supplementToAdd);
                 }
             }
-            supplPlanData.Name = supplPlan.Name;
+
             repo.SaveChanges();
 
             return RedirectToAction("Mine", "SupplementationPlans");
@@ -151,7 +159,7 @@ namespace FitnessTracker.Controllers
         public IActionResult Mine()
         {
             var supplementationPlans = this.repo.All<SupplementationPlan>()
-                .Where(x=> x.UserId == this.User.GetId())
+                .Where(x => x.UserId == this.User.GetId())
                 .OrderByDescending(x => x.Id)
                 .Select(x => new SupplPlanListViewModel
                 {
@@ -168,7 +176,6 @@ namespace FitnessTracker.Controllers
 
             return View(supplementationPlans);
         }
-
         private IEnumerable<SupplPlanSupplementViewModel> GetSupplementNames()
         {
             return this.repo.All<Supplement>()
@@ -183,17 +190,17 @@ namespace FitnessTracker.Controllers
                  .ToList();
         }
 
-        public EditSupplPlanViewModel Details(int id)
+        public CreateSupplementationPlanViewModel Details(string name)
         {
             return this.repo.All<SupplementationPlan>()
-                .Where(x => x.Id == id)
-                .Select(x => new EditSupplPlanViewModel
+                .Where(x => x.Name == name)
+                .Select(x => new CreateSupplementationPlanViewModel
                 {
-                    Id = x.Id,
                     Name = x.Name,
                     UserId = x.UserId
                 })
                 .FirstOrDefault();
         }
+
     }
 }

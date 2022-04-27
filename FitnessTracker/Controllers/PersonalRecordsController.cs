@@ -74,10 +74,11 @@ namespace FitnessTracker.Controllers
                 return View(personalRecord);
             }
 
-            var existingRecordUserId = this.repo.All<PersonalRecord>().Where(x => x.UserId == this.User.GetId())
-                .Select(x => x.ExerciseId).First();
+            var existingRecord = this.repo.All<PersonalRecord>()
+                .Where(x => x.UserId == this.User.GetId())
+                .ToList();
 
-            if (existingRecordUserId == personalRecord.ExerciseId)
+            if (existingRecord.Any(x=> x.ExerciseId == personalRecord.ExerciseId))
             {
                 this.ModelState.AddModelError(nameof(personalRecord.ExerciseId),
                     "There is a personal record for that exercise already. Please edit it instead.");
@@ -94,7 +95,7 @@ namespace FitnessTracker.Controllers
                 repo.Add(personalRecordData);
                 repo.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Mine", "PersonalRecords");
         }
 
         [Authorize]
