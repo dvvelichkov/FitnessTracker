@@ -32,6 +32,6 @@ namespace FitnessTracker.Models.Infrastructure
         public string UserId { get; set; }
 
         [ForeignKey("SupplementationPlan")]
-        public string? SupplementationPlanId { get; set; }
+        public int? SupplementationPlanId { get; set; }
     }
 }

@@ -131,8 +131,6 @@ namespace FitnessTracker.Controllers
                 return BadRequest();
             }
             supplPlanData.Name = supplPlan.Name;
-            supplPlan.Supplements = this.GetSupplementNames().ToList();
-            supplPlanData.Supplements.Clear();
 
             foreach (var supplement in supplPlan.Supplements)
             {
@@ -143,12 +141,19 @@ namespace FitnessTracker.Controllers
 
                     if (supplPlanData.Supplements.Contains(supplementToAdd))
                     {
-                        this.ModelState.AddModelError(nameof(supplementToAdd),
-                    "You already have such existing supplementation in your plan.");
+                        //    this.ModelState.AddModelError(nameof(supplement),
+                        //"You already have such existing supplementation in your plan.");
+
+                        this.ModelState.AddModelError(string.Empty,
+              "You already have such existing supplement in your plan!");
+
+                        supplPlan.Supplements = this.GetSupplementNames().ToList();
                         return View(supplPlan);
                     }
-
-                    supplPlanData.Supplements.Add(supplementToAdd);
+                    else
+                    {
+                        supplPlanData.Supplements.Add(supplementToAdd);
+                    }
                 }
             }
 
@@ -158,6 +163,11 @@ namespace FitnessTracker.Controllers
         }
         public IActionResult Mine()
         {
+            var supplPlanId = this.repo.All<SupplementationPlan>()
+                .Where(x => x.UserId == this.User.GetId())
+                .Select(x => x.Id)
+                .First();
+
             var supplementationPlans = this.repo.All<SupplementationPlan>()
                 .Where(x => x.UserId == this.User.GetId())
                 .OrderByDescending(x => x.Id)
@@ -165,7 +175,9 @@ namespace FitnessTracker.Controllers
                 {
                     Id = x.Id,
                     Name = x.Name,
-                    Supplements = x.Supplements.Select(x => new SupplPlanSupplementViewModel
+                    Supplements = x.Supplements
+                    .Where(x => x.SupplementationPlanId == supplPlanId)
+                    .Select(x => new SupplPlanSupplementViewModel
                     {
                         Id = x.Id,
                         Name = x.Name,

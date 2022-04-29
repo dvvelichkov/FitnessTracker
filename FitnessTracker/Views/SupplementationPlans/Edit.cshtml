@@ -9,6 +9,7 @@
         <div class="col-sm-12 col-md-4 offset-lg-4 ">
             <h2 class="text-center">Edit Supplementation Plan</h2>
             <form method="post">
+                <div asp-validation-summary="ModelOnly"></div>
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label">Name</label>
                     <input asp-for="Name" class="form-control" placeholder="Supplementation plan name...">
@@ -22,7 +23,9 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.CheckBoxFor(it => Model.Supplements[i].IsChecked, new { Style = "vertical" })
+                                    @*@Html.CheckBoxFor(it => Model.Supplements[i].IsChecked, new { Style = "vertical" })*@
+                                    <input asp-for="Supplements[i].IsChecked">
+                                    <span asp-validation-for="Supplements[i]" class="small text-danger"></span>
                                 </td>
                                 <td>
                                     @Html.HiddenFor(x=> Model.Supplements[i].Id)
